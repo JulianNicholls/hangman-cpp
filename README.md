@@ -8,7 +8,7 @@ even supporting all of C++20).
 
 I'm embracing the old and the new:
 
-Tmux - I've tried to get into this a few times, but I now have a real handle on it.
-NeoVim - I learnt vi more than 40 years ago, but NeoVim has re-ignited my interest.
-Lazygit - What a great Git front-end.
+- Tmux - I've tried to get into this a few times, but I now have a real handle on it.
+- NeoVim - I learnt vi more than 40 years ago, but NeoVim has re-ignited my interest.
+- Lazygit - What a great Git front-end.
 
