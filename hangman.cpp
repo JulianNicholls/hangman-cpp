@@ -9,8 +9,8 @@ namespace
 const char *clear = "\e[2J";
 const char *home = "\e[;H";
 
-const std::string land = "------------\n";
-const std::string top = " --------\n";
+constexpr std::string land = "------------\n";
+constexpr std::string top = " --------\n";
 
 const std::vector<std::string> gallows = {
     "\n\n\n\n\n\n" + land,
@@ -46,23 +46,40 @@ int main()
     std::cout << std::format("Words: {}\n", words.size());
 
     const std::string temp = words.random();
-    Word word(temp);
-    std::cout << std::format("\n{}: {}\n\n", temp, word);
+    Word choice(temp);
 
     char ch{' '};
+    bool complete = false;
+
+    auto hanged = [choice]() { return choice.bad_letters.size() == gallows.size() - 1; };
 
     do
     {
         std::cout << std::format(
-            "{}{}{}{}\n{} ", clear, home, gallows[word.bad_letters.size()], bad_guesses(word.bad_letters), word);
+            "{}{}{}\n{}\n{}\n=> ",
+            clear,
+            home,
+            gallows[choice.bad_letters.size()],
+            bad_guesses(choice.bad_letters),
+            choice);
         std::cin >> ch;
 
         std::cin.ignore(100, '\n');
 
-        if (!word.guessed(ch))
+        if (!choice.guessed(ch))
         {
-            word.guess(ch);
+            choice.guess(ch);
         }
 
-    } while (!word.done() && ch != '\\');
+        complete = choice.done() || hanged() || ch == '\\';
+    } while (!complete);
+
+    if (choice.done())
+    {
+        std::cout << std::format("You got it: {}\n", choice.word);
+    }
+    else if (hanged())
+    {
+        std::cout << std::format("Bad luck! It was {}\n", choice.word);
+    }
 }
