@@ -1,11 +1,15 @@
 #include "word.h"
 
-bool Word::guess(char ltr)
+bool Word::guess(char ch)
 {
-    if (in_word(ltr))
+    if (in_word(ch) && !good(ch))
     {
-        guessed_letters.push_back(ltr);
+        good_letters.push_back(ch);
         return true;
+    }
+    else if (!bad(ch))
+    {
+        bad_letters.push_back(ch);
     }
 
     return false;

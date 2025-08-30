@@ -16,13 +16,35 @@ struct Word
         return word.find(c) != std::string::npos;
     }
 
+    bool good(char c) const
+    {
+        return std::ranges::find(good_letters, c) != good_letters.end();
+    }
+
+    bool bad(char c) const
+    {
+        return std::ranges::find(bad_letters, c) != bad_letters.end();
+    }
+
     bool guessed(char c) const
     {
-        return std::ranges::find(guessed_letters, c) != guessed_letters.end();
+        return good(c) || bad(c);
+    }
+
+    bool done() const
+    {
+        for (char ch : word)
+        {
+            if (!good(ch))
+                return false;
+        }
+
+        return true;
     }
 
     std::string word;
-    std::vector<char> guessed_letters;
+    std::vector<char> good_letters;
+    std::vector<char> bad_letters;
 };
 
 template <>
@@ -39,7 +61,7 @@ struct std::formatter<Word>
 
         for (auto c : word.word)
         {
-            out += std::format("{} ", word.guessed(c) ? c : '_');
+            out += std::format("{} ", word.guessed(c) ? static_cast<char>(toupper(c)) : '_');
         }
 
         return std::format_to(ctx.out(), "{}", out);
