@@ -21,4 +21,7 @@ Wordlist::Wordlist(std::string_view filename)
     {
         words_.push_back(line);
     }
+
+    std::uniform_int_distribution<std::size_t>::param_type new_range(0, words_.size() - 1);
+    ud_.param(new_range);
 }
