@@ -51,7 +51,7 @@ int main()
     char ch{' '};
     bool complete = false;
 
-    auto hanged = [choice]() { return choice.bad_letters.size() == gallows.size() - 1; };
+    auto hanged = [&choice]() { return choice.bad_letters.size() == gallows.size() - 1; };
 
     do
     {
@@ -62,8 +62,8 @@ int main()
             gallows[choice.bad_letters.size()],
             bad_guesses(choice.bad_letters),
             choice);
-        std::cin >> ch;
 
+        std::cin >> ch;
         std::cin.ignore(100, '\n');
 
         if (!choice.guessed(ch))
