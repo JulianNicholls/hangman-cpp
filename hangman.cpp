@@ -9,10 +9,13 @@ namespace
 const char *clear = "\e[2J";
 const char *home = "\e[;H";
 
-constexpr std::string land = "------------\n";
-constexpr std::string top = " --------\n";
+// constexpr std::string land = "------------\n";
+// constexpr std::string top = " --------\n";
 
-const std::vector<std::string> gallows = {
+const std::string land = "------------------------------------\n";
+const std::string top = " -----------------------\n";
+
+const std::vector<std::string> old_gallows = {
     "\n\n\n\n\n\n" + land,
     "\n |\n |\n |\n |\n |\n" + land,
     top + " |\n |\n |\n |\n |\n" + land,
@@ -26,6 +29,58 @@ const std::vector<std::string> gallows = {
     top + " |/     |\n |      o\n |     /O\\\n |     / \\ \n |\n" + land};
 }
 
+const std::vector<std::string> gallows = {
+    "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + land,
+    "\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
+    top + " |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
+    top + " | /\n |/\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
+    top +
+        " | /                  |\n |/                   |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n "
+        "|\n |\n |\n |\n |\n |\n |" +
+        land,
+    top +
+        " | /                  |\n |/                   |\n |                  -----\n |                 | o o |\n |   "
+        "              |  o  |\n |                  -----\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n "
+        "|\n |\n |" +
+        land,
+    top +
+        " | /                  |\n |/                   |\n |                  -----\n |                 | o o |\n |   "
+        "              |  o  |\n |                  -----\n |               ____|_|____ \n |              |           "
+        "|\n |              |     O     |\n |              |     O     |\n |              |     O     |\n |            "
+        "  |     O     |\n |              |           |\n |               -----------\n |\n |\n |\n |\n |\n |\n |\n "
+        "|\n |" +
+        land,
+    top +
+        " | /                  |\n |/                   |\n |                  -----\n |                 | o o |\n |   "
+        "              |  o  |\n |                  -----\n |           ___ ____|_|____ \n |          /  _|           "
+        "|\n |         /  / |     O     |\n |        /  /  |     O     |\n |       -----  |     O     |\n |       "
+        "|___|  |     O     |\n |       |_|_|  |           |\n |               -----------\n |\n |\n |\n |\n |\n |\n "
+        "|\n |\n |" +
+        land,
+    top +
+        " | /                  |\n |/                   |\n |                  -----\n |                 | o o |\n |   "
+        "              |  o  |\n |                  -----\n |           ___ ____|_|____ ___\n |          /  _|         "
+        "  |_  \\\n |         /  / |     O     | \\  \\\n |        /  /  |     O     |  \\  \\\n |       -----  |     "
+        "O     |  -----\n |       |___|  |     O     |  |___|\n |       |_|_|  |           |  |_|_|\n |               "
+        "-----------\n |\n |\n |\n |\n |\n |\n |\n |\n |" +
+        land,
+    top +
+        " | /                  |\n |/                   |\n |                  -----\n |                 | o o |\n |   "
+        "              |  o  |\n |                  -----\n |           ___ ____|_|____ ___\n |          /  _|         "
+        "  |_  \\\n |         /  / |     O     | \\  \\\n |        /  /  |     O     |  \\  \\\n |       -----  |     "
+        "O     |  -----\n |       |___|  |     O     |  |___|\n |       |_|_|  |           |  |_|_|\n |               "
+        "-----------\n |               |  |\n |               |  |\n |               |  |\n |               |  |\n |   "
+        "           /  /\n |              ---\n |\n |\n |" +
+        land,
+    top +
+        " | /                  |\n |/                   |\n |                  -----\n |                 | o o |\n |   "
+        "              |  o  |\n |                  -----\n |           ___ ____|_|____ ___\n |          /  _|         "
+        "  |_  \\\n |         /  / |     O     | \\  \\\n |        /  /  |     O     |  \\  \\\n |       -----  |     "
+        "O     |  -----\n |       |___|  |     O     |  |___|\n |       |_|_|  |           |  |_|_|\n |               "
+        "-----------\n |               |  |   |  |\n |               |  |   |  |\n |               |  |   |  |\n |     "
+        "          |  |   |  |\n |              /  /   /  /\n |              ---    ---\n |\n |\n |" +
+        land};
+
 std::string bad_guesses(const std::vector<char> &list)
 {
     std::string out{"Guesses: "};
@@ -36,6 +91,16 @@ std::string bad_guesses(const std::vector<char> &list)
     }
 
     return out + "\n";
+}
+
+void clear_screen()
+{
+    std::cout << clear << home;
+}
+
+void show_gallows(std::size_t stage)
+{
+    std::cout << gallows[stage];
 }
 
 int main()
@@ -55,13 +120,10 @@ int main()
 
     do
     {
-        std::cout << std::format(
-            "{}{}{}\n{}\n{}\n=> ",
-            clear,
-            home,
-            gallows[choice.bad_letters.size()],
-            bad_guesses(choice.bad_letters),
-            choice);
+        clear_screen();
+        show_gallows(choice.bad_letters.size());
+
+        std::cout << std::format("\n{}\n{}\n\n=> ", bad_guesses(choice.bad_letters), choice);
 
         std::cin >> ch;
         std::cin.ignore(100, '\n');
@@ -80,6 +142,8 @@ int main()
     }
     else if (hanged())
     {
-        std::cout << std::format("Bad luck! It was {}\n", choice.word);
+        clear_screen();
+        show_gallows(choice.bad_letters.size());
+        std::cout << std::format("\nBad luck! It was {}\n", choice.word);
     }
 }

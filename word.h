@@ -55,13 +55,13 @@ struct std::formatter<Word>
         return ctx.begin();
     }
 
-    auto format(const Word &word, std::format_context &ctx) const
+    auto format(const Word &w, std::format_context &ctx) const
     {
         std::string out;
 
-        for (auto c : word.word)
+        for (auto c : w.word)
         {
-            out += std::format("{} ", word.guessed(c) ? static_cast<char>(toupper(c)) : '_');
+            out += std::format("{} ", w.guessed(c) ? static_cast<char>(toupper(c)) : '_');
         }
 
         return std::format_to(ctx.out(), "{}", out);
