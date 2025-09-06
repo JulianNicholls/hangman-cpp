@@ -1,31 +1,31 @@
 #include "gallows.h"
 
 const std::vector<std::string> TextGallows::gallows_text = {
-    "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + land,
-    "\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
-    top + " |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
-    top + " | /\n |/\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
+    "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + land,
+    "\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
+    top + " |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
+    top + " | /\n |/\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
     top +
-        " | /                  |\n |/                   |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n "
+        " | /                  |\n |/                   |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n "
         "|\n |\n |\n |\n |\n |\n |" +
         land,
     top +
         " | /                  |\n |/                   |\n |                  -----\n |                 | o o |\n |   "
-        "              |  o  |\n |                  -----\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n "
+        "              |  o  |\n |                  -----\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n "
         "|\n |\n |" +
         land,
     top +
         " | /                  |\n |/                   |\n |                  -----\n |                 | o o |\n |   "
         "              |  o  |\n |                  -----\n |               ____|_|____ \n |              |           "
         "|\n |              |     O     |\n |              |     O     |\n |              |     O     |\n |            "
-        "  |     O     |\n |              |           |\n |               -----------\n |\n |\n |\n |\n |\n |\n |\n "
+        "  |     O     |\n |              |           |\n |               -----------\n |\n |\n |\n |\n |\n |\n "
         "|\n |" +
         land,
     top +
         " | /                  |\n |/                   |\n |                  -----\n |                 | o o |\n |   "
         "              |  o  |\n |                  -----\n |           ___ ____|_|____ \n |          /  _|           "
         "|\n |         /  / |     O     |\n |        /  /  |     O     |\n |       -----  |     O     |\n |       "
-        "|___|  |     O     |\n |       |_|_|  |           |\n |               -----------\n |\n |\n |\n |\n |\n |\n "
+        "|___|  |     O     |\n |       |_|_|  |           |\n |               -----------\n |\n |\n |\n |\n |\n "
         "|\n |\n |" +
         land,
     top +
@@ -33,7 +33,7 @@ const std::vector<std::string> TextGallows::gallows_text = {
         "              |  o  |\n |                  -----\n |           ___ ____|_|____ ___\n |          /  _|         "
         "  |_  \\\n |         /  / |     O     | \\  \\\n |        /  /  |     O     |  \\  \\\n |       -----  |     "
         "O     |  -----\n |       |___|  |     O     |  |___|\n |       |_|_|  |           |  |_|_|\n |               "
-        "-----------\n |\n |\n |\n |\n |\n |\n |\n |\n |" +
+        "-----------\n |\n |\n |\n |\n |\n |\n |\n |" +
         land,
     top +
         " | /                  |\n |/                   |\n |                  -----\n |                 | o o |\n |   "
