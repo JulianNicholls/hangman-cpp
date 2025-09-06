@@ -7,7 +7,7 @@
 struct Word
 {
   public:
-    Word(const std::string &text)
+    Word(const std::string &text = "")
         : word(text)
     {
     }

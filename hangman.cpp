@@ -1,5 +1,7 @@
+#include <algorithm>
 #include <format>
 #include <iostream>
+#include <ranges>
 
 #include "gallows.h"
 #include "word.h"
@@ -9,6 +11,15 @@ namespace
 {
 const char *clear = "\e[2J";
 const char *home = "\e[;H";
+
+std::string upper(std::string_view text)
+{
+    std::string output{};
+
+    std::ranges::transform(text, std::back_inserter(output), toupper);
+
+    return output;
+}
 }
 
 std::string bad_guesses(const std::vector<char> &list)
@@ -25,7 +36,12 @@ std::string bad_guesses(const std::vector<char> &list)
 
 void clear_screen()
 {
-    std::cout << clear << home;
+    std::cout << clear;
+}
+
+void cursor_home()
+{
+    std::cout << home;
 }
 
 int main()
@@ -36,36 +52,56 @@ int main()
     std::cout << "Hangman V1.0\n\n";
     std::cout << std::format("Words: {}\n", words.size());
 
-    const std::string temp = words.random();
-    Word choice(temp);
+    Word choice{};
 
     char ch{' '};
     bool complete = false;
 
     auto hanged = [&]() { return choice.bad_letters.size() == gallows.stages() - 1; };
 
-    do
+    bool still_playing = true;
+
+    while (still_playing)
     {
         clear_screen();
 
-        std::cout << std::format("{}\n\n{}\n{}\n\n=> ", gallows, bad_guesses(choice.bad_letters), choice);
+        const std::string temp = words.random();
+        choice = temp;
+        gallows.reset();
 
+        do
+        {
+            cursor_home();
+
+            std::cout << std::format("{}\n\n{}\n{}\n\n=> ", gallows, bad_guesses(choice.bad_letters), choice);
+
+            std::cin >> ch;
+            std::cin.ignore(100, '\n');
+
+            ch = tolower(ch);
+
+            if (!choice.guessed(ch) && !choice.guess(ch))
+                gallows.next();
+
+            complete = choice.done() || hanged() || ch == '\\';
+        } while (!complete);
+
+        clear_screen();
+        cursor_home();
+
+        if (choice.done())
+        {
+            std::cout << std::format("{}\nYou got it: {}\n", gallows, upper(choice.word));
+        }
+        else if (hanged())
+        {
+            std::cout << std::format("{}\nBad luck! It was {}\n", gallows, upper(choice.word));
+        }
+
+        std::cout << "\nplay again? ";
         std::cin >> ch;
-        std::cin.ignore(100, '\n');
 
-        if (!choice.guessed(ch) && !choice.guess(ch))
-            gallows.next();
-
-        complete = choice.done() || hanged() || ch == '\\';
-    } while (!complete);
-
-    if (choice.done())
-    {
-        std::cout << std::format("You got it: {}\n", choice.word);
-    }
-    else if (hanged())
-    {
-        clear_screen();
-        std::cout << std::format("{}\n\nBad luck! It was {}\n", gallows, choice.word);
+        if (static_cast<char>(tolower(ch)) == 'n')
+            still_playing = false;
     }
 }
