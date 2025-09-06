@@ -14,7 +14,7 @@ target_compile_options(project_compiler_flags INTERFACE
  "$<${msvc_cxx}:$<BUILD_INTERFACE:-W3>>"
 )
 
-add_executable(hangman hangman.cpp wordlist.cpp word.cpp)
+add_executable(hangman hangman.cpp wordlist.cpp word.cpp gallows.cpp)
 
 target_link_libraries(hangman PUBLIC project_compiler_flags)
 

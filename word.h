@@ -1,3 +1,6 @@
+#ifndef WORD_H
+#define WORD_H
+
 #include <format>
 #include <vector>
 
@@ -67,3 +70,5 @@ struct std::formatter<Word>
         return std::format_to(ctx.out(), "{}", out);
     }
 };
+
+#endif // WORD_H

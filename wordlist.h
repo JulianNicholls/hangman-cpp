@@ -1,3 +1,6 @@
+#ifndef WORDLIST_H
+#define WORDLIST_H
+
 #include <random>
 #include <string>
 #include <string_view>
@@ -23,3 +26,5 @@ class Wordlist
     std::vector<std::string> words_;
     std::uniform_int_distribution<std::size_t> ud_;
 };
+
+#endif // WORDLIST_H
