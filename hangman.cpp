@@ -3,6 +3,9 @@
 #include <iostream>
 #include <ranges>
 
+#include <termios.h>
+#include <unistd.h>
+
 #include "gallows.h"
 #include "word.h"
 #include "wordlist.h"
@@ -44,6 +47,33 @@ void cursor_home()
     std::cout << home;
 }
 
+// Get a character from the keyboard without requiring enter afterward.
+#ifdef _WIN32
+#include <conio.h>
+char getchar_immediate()
+{
+    return _getch();
+}
+#else
+char getchar_immediate()
+{
+    struct termios oldterm, newterm;
+    char ch;
+
+    tcgetattr(STDIN_FILENO, &oldterm);
+    newterm = oldterm;
+
+    newterm.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newterm);
+
+    ch = getchar();
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldterm);
+
+    return ch;
+}
+#endif
+
 int main()
 {
     Wordlist words("words-2019.txt");
@@ -75,10 +105,7 @@ int main()
 
             std::cout << std::format("{}\n\n{}\n{}\n\n=> ", gallows, bad_guesses(choice.bad_letters), choice);
 
-            std::cin >> ch;
-            std::cin.ignore(100, '\n');
-
-            ch = tolower(ch);
+            ch = getchar_immediate();
 
             if (!choice.guessed(ch) && !choice.guess(ch))
                 gallows.next();
@@ -91,15 +118,15 @@ int main()
 
         if (choice.done())
         {
-            std::cout << std::format("{}\nYou got it: {}\n", gallows, upper(choice.word));
+            std::cout << std::format("{}{}\nYou got it: {}{}\n", gallows, light_green, upper(choice.word), reset);
         }
         else if (hanged())
         {
-            std::cout << std::format("{}\nBad luck! It was {}\n", gallows, upper(choice.word));
+            std::cout << std::format("{}{}\nBad luck! It was {}{}\n", gallows, light_red, upper(choice.word), reset);
         }
 
-        std::cout << "\nplay again? ";
-        std::cin >> ch;
+        std::cout << light_blue + "\nplay again? " + reset;
+        ch = getchar_immediate();
 
         if (static_cast<char>(tolower(ch)) == 'n')
             still_playing = false;
