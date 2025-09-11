@@ -1,7 +1,9 @@
 #include <algorithm>
+#include <chrono>
 #include <format>
 #include <iostream>
 #include <ranges>
+#include <thread>
 
 #include <termios.h>
 #include <unistd.h>
@@ -9,6 +11,8 @@
 #include "gallows.h"
 #include "word.h"
 #include "wordlist.h"
+
+using namespace std::chrono_literals;
 
 namespace
 {
@@ -79,8 +83,10 @@ int main()
     Wordlist words("words-2019.txt");
     TextGallows gallows{};
 
-    std::cout << "Hangman V1.0\n\n";
+    std::cout << "Hangman V1.03\n\n";
     std::cout << std::format("Words: {}\n", words.size());
+
+    std::this_thread::sleep_for(1s);
 
     Word choice{};
 
@@ -131,4 +137,6 @@ int main()
         if (static_cast<char>(tolower(ch)) == 'n')
             still_playing = false;
     }
+
+    std::cout << std::endl;
 }
