@@ -12,14 +12,22 @@ class Wordlist
 {
   public:
     Wordlist(std::string_view filename);
+
     std::size_t size() const
     {
         return words_.size();
     }
 
-    std::string random()
+    std::string random(std::string::size_type min_length = 1)
     {
-        return words_[ud_(rng)];
+        std::string word;
+
+        do
+        {
+            word = words_[ud_(rng)];
+        } while (word.size() < min_length);
+
+        return word;
     }
 
   private:
