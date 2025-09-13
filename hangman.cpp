@@ -8,6 +8,7 @@
 #include <termios.h>
 #include <unistd.h>
 
+#include "ansi.h"
 #include "gallows.h"
 #include "word.h"
 #include "wordlist.h"
@@ -16,8 +17,6 @@ using namespace std::chrono_literals;
 
 namespace
 {
-const char *clear = "\e[2J";
-const char *home = "\e[;H";
 
 std::string upper(std::string_view text)
 {
@@ -43,12 +42,12 @@ std::string bad_guesses(const std::vector<char> &list)
 
 void clear_screen()
 {
-    std::cout << clear;
+    std::cout << ANSI::clear;
 }
 
 void cursor_home()
 {
-    std::cout << home;
+    std::cout << ANSI::home;
 }
 
 // Get a character from the keyboard without requiring enter afterward.
@@ -78,8 +77,10 @@ char getchar_immediate()
 }
 #endif
 
-int main()
+int main(int argc, char *argv[])
 {
+    const std::string::size_type min_length = (argc > 1) ? atoi(argv[1]) : 5;
+
     Wordlist words("words-2019.txt");
     TextGallows gallows{};
 
@@ -101,8 +102,7 @@ int main()
     {
         clear_screen();
 
-        const std::string temp = words.random();
-        choice = temp;
+        choice = words.random(min_length);
         gallows.reset();
 
         do
@@ -113,7 +113,7 @@ int main()
 
             ch = getchar_immediate();
 
-            if (!choice.guessed(ch) && !choice.guess(ch))
+            if (isalpha(ch) && !choice.guessed(ch) && !choice.guess(ch))
                 gallows.next();
 
             complete = choice.done() || hanged() || ch == '\\';
@@ -124,14 +124,16 @@ int main()
 
         if (choice.done())
         {
-            std::cout << std::format("{}{}\nYou got it: {}{}\n", gallows, light_green, upper(choice.word), reset);
+            std::cout << std::format(
+                "{}{}\nYou got it: {}{}\n", gallows, ANSI::light_green, upper(choice.word), ANSI::reset);
         }
         else if (hanged())
         {
-            std::cout << std::format("{}{}\nBad luck! It was {}{}\n", gallows, light_red, upper(choice.word), reset);
+            std::cout << std::format(
+                "{}{}\nBad luck! It was {}{}\n", gallows, ANSI::light_red, upper(choice.word), ANSI::reset);
         }
 
-        std::cout << light_blue + "\nplay again? " + reset;
+        std::cout << ANSI::light_blue + "\nplay again? " + ANSI::reset;
         ch = getchar_immediate();
 
         if (static_cast<char>(tolower(ch)) == 'n')
