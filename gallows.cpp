@@ -1,7 +1,19 @@
+
 #include "gallows.h"
 #include "ansi.h"
 
 using namespace ANSI;
+
+const std::string land = "";
+const std::string top = "";
+
+const std::vector<GallowsEntry> TextGallows::gallows_entries_ = {
+    {.line = 24, .column = 1, .text = brown + "------------------------------------"},
+    {.line = 2,
+     .column = 2,
+     .text = brown + "|\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |"},
+    {.line = 1, .column = 2, .text = brown + "-----------------------"},
+    {.line = 2, .column = 4, .text = brown + "/\n |/"}};
 
 const std::string top_with_rope =
     brown + top + " | /                  " + yellow + "|" + brown + "\n |/                   " + yellow + "|" + brown;
@@ -12,9 +24,9 @@ const std::string top_with_head = top_with_rope + "\n |                  " + yel
                                   "              " +
                                   yellow + "|  o  |" + brown + "\n |                  " + yellow + "-----" + brown;
 
-const std::vector<std::string> TextGallows::gallows_text = {
+const std::vector<std::string> previous = {
     brown + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + land,
-    brown + "\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
+    brown + "|\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
     brown + top + " |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
     brown + top + " | /\n |/\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
     top_with_rope + "\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,

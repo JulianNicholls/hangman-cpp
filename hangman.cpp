@@ -3,6 +3,7 @@
 #include <format>
 #include <iostream>
 #include <ranges>
+#include <string>
 #include <thread>
 
 #include <termios.h>
