@@ -10,7 +10,7 @@ int main()
 
     std::cout << ANSI::clear;
 
-    for (int i = 0; i < 4; ++i)
+    for (std::size_t i = 0; i < gallows.stages(); ++i)
     {
         gallows.show();
         std::string ch;

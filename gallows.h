@@ -58,13 +58,7 @@ class TextGallows : public Gallows
         ++index_;
     };
 
-    void show() const override
-    {
-        const auto &entry = gallows_entries_[index_];
-
-        ANSI::move_cursor(entry.line, entry.column);
-        std::cout << entry.text;
-    }
+    void show() const override;
 
   private:
     static const std::vector<GallowsEntry> gallows_entries_;

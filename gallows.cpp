@@ -1,6 +1,7 @@
+#include <sstream>
 
-#include "gallows.h"
 #include "ansi.h"
+#include "gallows.h"
 
 using namespace ANSI;
 
@@ -9,43 +10,37 @@ const std::string top = "";
 
 const std::vector<GallowsEntry> TextGallows::gallows_entries_ = {
     {.line = 24, .column = 1, .text = brown + "------------------------------------"},
-    {.line = 2,
-     .column = 2,
-     .text = brown + "|\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |"},
-    {.line = 1, .column = 2, .text = brown + "-----------------------"},
-    {.line = 2, .column = 4, .text = brown + "/\n |/"}};
+    {.line = 2, .column = 2, .text = brown + "|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|"},
+    {.line = 1, .column = 3, .text = brown + "-----------------------"},
+    {.line = 2, .column = 3, .text = brown + " /\n/"},
+    {.line = 2, .column = 24, .text = brown + "|\n|"},
+    {.line = 4,
+     .column = 21,
+     .text =
+         yellow + " -----\n| " + light_blue + "o o" + yellow + " |\n|  " + light_blue + "o" + yellow + "  |\n -----"},
+    {.line = 8,
+     .column = 18,
+     .text = yellow + " ____|_|____\n|           |\n|     " + light_green + "O" + yellow + "     |\n|     " +
+             light_green + "O" + yellow + "     |\n|     " + light_green + "O" + yellow +
+             "     |\n|           |\n -----------"},
 
-const std::string top_with_rope =
-    brown + top + " | /                  " + yellow + "|" + brown + "\n |/                   " + yellow + "|" + brown;
+};
 
-const std::string top_with_head = top_with_rope + "\n |                  " + yellow + "-----" + brown +
-                                  "\n |                 " + yellow + "| o o |" + brown +
-                                  "\n |   "
-                                  "              " +
-                                  yellow + "|  o  |" + brown + "\n |                  " + yellow + "-----" + brown;
+void TextGallows::show() const
+{
+    const auto &entry = gallows_entries_[index_];
+    std::istringstream lines{entry.text};
+    unsigned int line = entry.line;
+    std::string str;
+
+    while (std::getline(lines, str))
+    {
+        ANSI::move_cursor(line++, entry.column);
+        std::cout << str;
+    }
+}
 
 const std::vector<std::string> previous = {
-    brown + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + land,
-    brown + "|\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
-    brown + top + " |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
-    brown + top + " | /\n |/\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
-    top_with_rope + "\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |" + land,
-    top_with_head +
-        "\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n "
-        "|\n |\n |" +
-        land,
-
-    top_with_head + "\n |               " + yellow + "____|_|____" + brown + "\n |              " + yellow +
-        "|           |" + brown + "\n |              " + yellow + "|     " + light_green + "O" + yellow + "     |" +
-        brown + "\n |              " + yellow + "|     " + light_green + "O" + yellow + "     |" + brown +
-        "\n |              " + yellow + "|     " + light_green + "O" + yellow + "     |" + brown +
-        "\n |            "
-        "  " +
-        yellow + "|     " + light_green + "O" + yellow + "     |" + brown + "\n |              " + yellow +
-        "|           |" + brown + "\n |               " + yellow + "-----------\n" + brown +
-        " |\n |\n |\n |\n |\n |\n "
-        "|\n |" +
-        land,
 
     brown + top + " | /   " + yellow + "|" + brown + "\n |/              |" + yellow + "|" + brown +
         "\n |                  -----\n |                 | o o |\n |   "
