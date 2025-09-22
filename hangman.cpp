@@ -85,10 +85,12 @@ int main(int argc, char *argv[])
     Wordlist words("words-2019.txt");
     TextGallows gallows{};
 
-    std::cout << "Hangman V1.03\n\n";
+    std::cout << "Hangman V1.04\n\n";
     std::cout << std::format("Words: {}\n", words.size());
 
-    std::this_thread::sleep_for(1s);
+    std::cout << std::format("\nMinimum length: {}\n", min_length);
+
+    std::this_thread::sleep_for(1.5s);
 
     Word choice{};
 
