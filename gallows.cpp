@@ -8,6 +8,8 @@ using namespace ANSI;
 const std::string land = "";
 const std::string top = "";
 
+const std::string leg = " |  |\n |  |\n |  |\n |  |\n/  /\n---";
+
 const std::vector<GallowsEntry> TextGallows::gallows_entries_ = {
     {.line = 24, .column = 1, .text = brown + "------------------------------------"},
     {.line = 2, .column = 2, .text = brown + "|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|"},
@@ -21,8 +23,12 @@ const std::vector<GallowsEntry> TextGallows::gallows_entries_ = {
     {.line = 8,
      .column = 18,
      .text = yellow + " ____|_|____\n|           |\n|     " + light_green + "O" + yellow + "     |\n|     " +
-             light_green + "O" + yellow + "     |\n|     " + light_green + "O" + yellow +
-             "     |\n|           |\n -----------"},
+             light_green + "O" + yellow + "     |\n|     " + light_green + "O" + yellow + "     |\n|     " +
+             light_green + "O" + yellow + "     |\n|           |\n -----------"},
+    {.line = 8, .column = 11, .text = yellow + "    ___\n   /  _\n  /  /\n /  /\n-----\n|___|\n|_|_|"},
+    {.line = 8, .column = 31, .text = yellow + "___\n_  \\\n \\  \\\n  \\  \\\n  -----\n  |___|\n  |_|_|"},
+    {.line = 16, .column = 18, .text = yellow + leg},
+    {.line = 16, .column = 25, .text = yellow + leg},
 
 };
 
