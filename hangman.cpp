@@ -31,7 +31,7 @@ std::string upper(std::string_view text)
 
 std::string bad_guesses(const std::vector<char> &list)
 {
-    std::string out{"Guesses: "};
+    std::string out{ANSI::reset + "Guesses: " + ANSI::light_red};
 
     for (char ch : list)
     {
@@ -108,9 +108,9 @@ int main(int argc, char *argv[])
 
         do
         {
-            cursor_home();
-
-            std::cout << std::format("{}\n\n{}\n{}\n\n=> ", gallows, bad_guesses(choice.bad_letters), choice);
+            gallows.show();
+            ANSI::move_cursor(26, 1);
+            std::cout << std::format("{}\n{}{}\n\n=> ", bad_guesses(choice.bad_letters), ANSI::reset, choice);
 
             ch = getchar_immediate();
 
@@ -121,17 +121,20 @@ int main(int argc, char *argv[])
         } while (!complete);
 
         clear_screen();
-        cursor_home();
 
         if (choice.done())
         {
-            std::cout << std::format(
-                "{}{}\nYou got it: {}{}\n", gallows, ANSI::light_green, upper(choice.word), ANSI::reset);
+            gallows.draw_state();
+            ANSI::move_cursor(26, 1);
+
+            std::cout << std::format("{}\nYou got it: {}{}\n", ANSI::light_green, upper(choice.word), ANSI::reset);
         }
         else if (hanged())
         {
-            std::cout << std::format(
-                "{}{}\nBad luck! It was {}{}\n", gallows, ANSI::light_red, upper(choice.word), ANSI::reset);
+            gallows.draw_state();
+            ANSI::move_cursor(26, 1);
+
+            std::cout << std::format("{}\nBad luck! It was {}{}\n", ANSI::light_red, upper(choice.word), ANSI::reset);
         }
 
         std::cout << ANSI::light_blue + "\nplay again? " + ANSI::reset;

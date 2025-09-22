@@ -7,13 +7,6 @@
 
 #include "ansi.h"
 
-struct GallowsEntry
-{
-    unsigned int line;
-    unsigned int column;
-    std::string text;
-};
-
 class Gallows
 {
   public:
@@ -28,6 +21,14 @@ class Gallows
     virtual void next() = 0;
 
     virtual void show() const = 0;
+    virtual void draw_state() const = 0;
+};
+
+struct GallowsEntry
+{
+    unsigned int line;
+    unsigned int column;
+    std::string text;
 };
 
 class TextGallows : public Gallows
@@ -59,6 +60,7 @@ class TextGallows : public Gallows
     };
 
     void show() const override;
+    void draw_state() const override;
 
   private:
     static const std::vector<GallowsEntry> gallows_entries_;

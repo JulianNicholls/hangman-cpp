@@ -5,9 +5,6 @@
 
 using namespace ANSI;
 
-const std::string land = "";
-const std::string top = "";
-
 const std::string leg = " |  |\n |  |\n |  |\n |  |\n/  /\n---";
 
 const std::vector<GallowsEntry> TextGallows::gallows_entries_ = {
@@ -46,35 +43,19 @@ void TextGallows::show() const
     }
 }
 
-const std::vector<std::string> previous = {
+void TextGallows::draw_state() const
+{
+    for (size_t i = 0; i <= index_; ++i)
+    {
+        const auto &entry = gallows_entries_[i];
+        std::istringstream lines{entry.text};
+        unsigned int line = entry.line;
+        std::string str;
 
-    brown + top + " | /   " + yellow + "|" + brown + "\n |/              |" + yellow + "|" + brown +
-        "\n |                  -----\n |                 | o o |\n |   "
-        "              |  o  |\n |                  -----\n |           ___ ____|_|____ \n |          /  _|           "
-        "|\n |         /  / |     O     |\n |        /  /  |     O     |\n |       -----  |     O     |\n |       "
-        "|___|  |     O     |\n |       |_|_|  |           |\n |               -----------\n |\n |\n |\n |\n |\n "
-        "|\n |\n |" +
-        land,
-    brown + top + " | /   " + yellow + "|" + brown + "\n |/              |" + yellow + "|" + brown +
-        "\n |                  -----\n |                 | o o |\n |   "
-        "              |  o  |\n |                  -----\n |           ___ ____|_|____ ___\n |          /  _|         "
-        "  |_  \\\n |         /  / |     O     | \\  \\\n |        /  /  |     O     |  \\  \\\n |       -----  |     "
-        "O     |  -----\n |       |___|  |     O     |  |___|\n |       |_|_|  |           |  |_|_|\n |               "
-        "-----------\n |\n |\n |\n |\n |\n |\n |\n |" +
-        land,
-    brown + top + " | /   " + yellow + "|" + brown + "\n |/              |" + yellow + "|" + brown +
-        "\n |                  -----\n |                 | o o |\n |   "
-        "              |  o  |\n |                  -----\n |           ___ ____|_|____ ___\n |          /  _|         "
-        "  |_  \\\n |         /  / |     O     | \\  \\\n |        /  /  |     O     |  \\  \\\n |       -----  |     "
-        "O     |  -----\n |       |___|  |     O     |  |___|\n |       |_|_|  |           |  |_|_|\n |               "
-        "-----------\n |               |  |\n |               |  |\n |               |  |\n |               |  |\n |   "
-        "           /  /\n |              ---\n |\n |" +
-        land,
-    brown + top + " | /   " + yellow + "|" + brown + "\n |/              |" + yellow + "|" + brown +
-        "\n |                  -----\n |                 | o o |\n |   "
-        "              |  o  |\n |                  -----\n |           ___ ____|_|____ ___\n |          /  _|         "
-        "  |_  \\\n |         /  / |     O     | \\  \\\n |        /  /  |     O     |  \\  \\\n |       -----  |     "
-        "O     |  -----\n |       |___|  |     O     |  |___|\n |       |_|_|  |           |  |_|_|\n |               "
-        "-----------\n |               |  |   |  |\n |               |  |   |  |\n |               |  |   |  |\n |     "
-        "          |  |   |  |\n |              /  /   /  /\n |              ---    ---\n |\n |" +
-        land};
+        while (std::getline(lines, str))
+        {
+            ANSI::move_cursor(line++, entry.column);
+            std::cout << str;
+        }
+    }
+}
