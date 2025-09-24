@@ -12,3 +12,6 @@ I'm embracing the old and the new:
 - NeoVim - I learnt vi more than 40 years ago, but NeoVim has re-ignited my interest.
 - Lazygit - What a great Git front-end.
 
+## latest state
+
+The hanged entity is now a robot. The text has colours now, including the robot.
