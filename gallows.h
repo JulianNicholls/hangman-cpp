@@ -2,6 +2,8 @@
 #define GALLOWS_H
 
 #include <iostream>
+#include <print>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -24,11 +26,33 @@ class Gallows
     virtual void draw_state() const = 0;
 };
 
-struct GallowsEntry
+class GallowsEntry
 {
-    unsigned int line;
-    unsigned int column;
-    std::string text;
+  public:
+    GallowsEntry(unsigned int l, unsigned int c, std::string_view text)
+        : line_(l)
+        , column_(c)
+        , text_(text)
+    {
+    }
+
+    void show() const
+    {
+        std::istringstream lines{text_};
+        unsigned int cur_line = line_;
+        std::string str;
+
+        while (std::getline(lines, str))
+        {
+            ANSI::move_cursor(cur_line++, column_);
+            std::cout << str;
+        }
+    }
+
+  private:
+    unsigned int line_;
+    unsigned int column_;
+    std::string text_;
 };
 
 class TextGallows : public Gallows
@@ -59,8 +83,18 @@ class TextGallows : public Gallows
         ++index_;
     };
 
-    void show() const override;
-    void draw_state() const override;
+    void show() const override
+    {
+        gallows_entries_[index_].show();
+    }
+
+    void draw_state() const override
+    {
+        for (size_t i = 0; i <= index_; ++i)
+        {
+            gallows_entries_[i].show();
+        }
+    }
 
   private:
     static const std::vector<GallowsEntry> gallows_entries_;
