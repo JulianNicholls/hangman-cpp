@@ -13,8 +13,9 @@ int main()
     for (std::size_t i = 0; i < gallows.stages(); ++i)
     {
         gallows.show();
-        std::string ch;
-        std::getline(std::cin, ch);
+
+        ANSI::move_cursor(25, 1);
+        std::cin.get();
 
         gallows.next();
     }

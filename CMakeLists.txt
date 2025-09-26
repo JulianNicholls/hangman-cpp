@@ -10,13 +10,13 @@ set(gcc_like_cxx "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU,LCC>")
 set(msvc_cxx "$<COMPILE_LANG_AND_ID:CXX,MSVC>")
 
 target_compile_options(project_compiler_flags INTERFACE
-  "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>"
- "$<${msvc_cxx}:$<BUILD_INTERFACE:-W3>>"
+  "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused;-Oz>>"
+  "$<${msvc_cxx}:$<BUILD_INTERFACE:-W3>>"
 )
 
 add_executable(hangman hangman.cpp wordlist.cpp word.cpp gallows.cpp ansi.cpp)
 add_executable(testg testg.cpp gallows.cpp ansi.cpp)
 
 target_link_libraries(hangman PUBLIC project_compiler_flags)
-target_link_libraries(testg PUBLIC project_compiler_flags)
+target_link_libraries(testg   PUBLIC project_compiler_flags)
 
