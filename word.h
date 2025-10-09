@@ -2,6 +2,7 @@
 #define WORD_H
 
 #include <format>
+#include <ranges>
 #include <vector>
 
 struct Word

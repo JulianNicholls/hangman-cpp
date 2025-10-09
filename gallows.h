@@ -1,6 +1,7 @@
 #ifndef GALLOWS_H
 #define GALLOWS_H
 
+#include <array>
 #include <iostream>
 #include <print>
 #include <sstream>
@@ -44,8 +45,7 @@ class GallowsEntry
 
         while (std::getline(lines, str))
         {
-            ANSI::move_cursor(cur_line++, column_);
-            std::cout << str;
+            std::cout << ANSI::move_cursor(cur_line++, column_) << str;
         }
     }
 
@@ -97,7 +97,7 @@ class TextGallows : public Gallows
     }
 
   private:
-    static const std::vector<GallowsEntry> gallows_entries_;
+    static const std::array<GallowsEntry, 11> gallows_entries_;
     std::size_t index_{0};
 };
 

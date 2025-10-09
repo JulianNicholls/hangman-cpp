@@ -4,8 +4,14 @@
 namespace ANSI
 {
 // Move to line and column (1-based)
-void move_cursor(unsigned int line, unsigned int column)
+constexpr std::string move_cursor(unsigned int line, unsigned int column)
 {
-    std::cout << std::format("\x1b[{};{}H", line, column);
+    return std::format("\x1b[{};{}H", line, column);
+}
+
+constexpr std::string colour256(unsigned int index)
+{
+    // Return a 256-colour colour
+    return std::format("\x1b[38;5;{}m", index);
 }
 }

@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 {
     const std::string::size_type min_length = (argc > 1) ? atoi(argv[1]) : 5;
 
-    Wordlist words("words-2019.txt");
+    Wordlist words("words-2025-5-16.txt");
     TextGallows gallows{};
 
     std::cout << "Hangman V1.04\n\n";
@@ -111,8 +111,8 @@ int main(int argc, char *argv[])
         do
         {
             gallows.show();
-            ANSI::move_cursor(26, 1);
-            std::cout << std::format("{}\n{}{}\n\n=> ", bad_guesses(choice.bad_letters), ANSI::reset, choice);
+            std::cout << ANSI::move_cursor(26, 1)
+                      << std::format("{}\n{}{}\n\n=> ", bad_guesses(choice.bad_letters), ANSI::reset, choice);
 
             ch = getchar_immediate();
 
@@ -127,16 +127,14 @@ int main(int argc, char *argv[])
         if (choice.done())
         {
             gallows.draw_state();
-            ANSI::move_cursor(26, 1);
-
-            std::cout << std::format("{}\nYou got it: {}{}\n", ANSI::light_green, upper(choice.word), ANSI::reset);
+            std::cout << ANSI::move_cursor(26, 1)
+                      << std::format("{}\nYou got it: {}{}\n", ANSI::light_green, upper(choice.word), ANSI::reset);
         }
         else if (hanged())
         {
             gallows.draw_state();
-            ANSI::move_cursor(26, 1);
-
-            std::cout << std::format("{}\nBad luck! It was {}{}\n", ANSI::light_red, upper(choice.word), ANSI::reset);
+            std::cout << ANSI::move_cursor(26, 1)
+                      << std::format("{}\nBad luck! It was {}{}\n", ANSI::light_red, upper(choice.word), ANSI::reset);
         }
 
         std::cout << ANSI::light_blue + "\nplay again? " + ANSI::reset;
