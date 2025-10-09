@@ -46,5 +46,6 @@ et voila.
 
 ## latest state
 
-- The hanged entity is now a robot. The text has colours now, including the robot.
+- The hanged entity is now a robot.
+- The text has colours now, including the robot.
 - New word list.
