@@ -34,9 +34,11 @@ The wordlist that I have chosen to construct from his files is:
 It is built using cmake
 
 Clone the repository
+
 `cd` into the `build` directory, and run
-`cmake ..`
-`cmake - build .`
+
+`cmake ..
+cmake - build .`
 
 et voila.
 
