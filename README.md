@@ -37,8 +37,10 @@ Clone the repository
 
 `cd` into the `build` directory, and run
 
-`cmake ..
-cmake - build .`
+```
+cmake ..
+cmake - build .
+```
 
 et voila.
 
