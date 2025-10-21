@@ -1,22 +1,34 @@
 cmake_minimum_required(VERSION 4.0)
 
 # set the project name and version
-project(hangman VERSION 1.0)
+project(hangman LANGUAGES CXX VERSION 1.0)
 
-add_library(project_compiler_flags INTERFACE)
-target_compile_features(project_compiler_flags INTERFACE cxx_std_23)
+set(CMAKE_CXX_STANDARD 23)
 
-set(gcc_like_cxx "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU,LCC>")
-set(msvc_cxx "$<COMPILE_LANG_AND_ID:CXX,MSVC>")
+# Generate compile_commands.json for IDE support
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_BUILD_TYPE Debug)
 
-target_compile_options(project_compiler_flags INTERFACE
-  "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused;-Oz>>"
-  "$<${msvc_cxx}:$<BUILD_INTERFACE:-W3>>"
+# Dependencies
+include(FetchContent)
+
+# Fetch raylib
+FetchContent_Declare(
+    raylib
+    GIT_REPOSITORY https://github.com/raysan5/raylib.git
+    GIT_TAG 5.5
+    GIT_SHALLOW 1
 )
+FetchContent_MakeAvailable(raylib)
 
 add_executable(text_hangman text_hangman.cpp wordlist.cpp word.cpp text_gallows.cpp)
 add_executable(testg testg.cpp text_gallows.cpp)
+add_executable(raylib_hangman raylib_hangman.cpp raylib_game.cpp wordlist.cpp word.cpp)
 
-target_link_libraries(text_hangman PUBLIC project_compiler_flags)
-target_link_libraries(testg        PUBLIC project_compiler_flags)
+target_link_libraries(raylib_hangman raylib)
+
+# Platform-specific settings
+if(APPLE)
+    target_link_libraries(raylib_hangman "-framework IOKit" "-framework Cocoa" "-framework OpenGL")
+endif()
 
