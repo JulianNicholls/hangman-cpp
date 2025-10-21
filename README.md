@@ -44,7 +44,7 @@ cmake ..
 cmake --build .
 ```
 
-then you can run `hangman`
+then you can run `text_hangman`
 
 et voila.
 
@@ -53,3 +53,5 @@ et voila.
 - The hanged entity is now a robot.
 - The text has colours now, including the robot.
 - New word list.
+
+- Preparation for a graphical version using Raylib
