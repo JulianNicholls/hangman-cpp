@@ -4,7 +4,7 @@
 
 int main(int argc, char **argv)
 {
-    Game game{1920, 1080, "Hangman"};
+    Game game{300, 300, "Hangman"};
 
     game.run();
 }
