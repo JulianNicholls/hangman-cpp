@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
 
         do
         {
-            gallows.show();
+            gallows.draw();
             std::cout << ANSI::move_cursor(26, 1)
                       << std::format("{}\n{}{}\n\n=> ", bad_guesses(choice.bad_letters), ANSI::reset, choice);
 

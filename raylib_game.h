@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "images.h"
+#include "graphic_gallows.h"
 
 class Game
 {
@@ -14,7 +14,7 @@ class Game
     void run();
 
   private:
-    ImageLoader loadedImages_{};
+    std::unique_ptr<GraphicGallows> gallows_;
 };
 
 #endif // RAYLIB_GAME

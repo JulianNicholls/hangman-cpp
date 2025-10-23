@@ -9,7 +9,6 @@
 class ImageLoader
 {
   public:
-    ImageLoader() = default;
     ImageLoader(std::string_view dir);
 
     virtual ~ImageLoader();
@@ -18,6 +17,11 @@ class ImageLoader
 
     void load(std::string_view dir);
     const Texture2D &at(std::string_view name) const;
+
+    std::size_t size() const
+    {
+        return images_.size();
+    }
 
   private:
     std::unordered_map<std::string, Texture2D> images_;

@@ -1,5 +1,4 @@
 #include <filesystem>
-#include <print>
 
 #include "raylib.h"
 
@@ -8,17 +7,10 @@
 ImageLoader::ImageLoader(std::string_view dir)
     : images_{}
 {
-    load(dir);
-}
-
-void ImageLoader::load(std::string_view dir)
-{
     for (auto const &dir_entry : std::filesystem::directory_iterator(dir))
     {
         std::string imagename{dir_entry.path().stem()};
         const char *filename = dir_entry.path().c_str();
-
-        std::println("Loading {:<20} {}", imagename, filename);
 
         images_.emplace(imagename, LoadTexture(filename));
     }

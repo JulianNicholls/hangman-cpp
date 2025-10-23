@@ -2,15 +2,16 @@
 
 #include "raylib.h"
 
-#include "images.h"
+#include "graphic_gallows.h"
 #include "raylib_game.h"
 
 Game::Game(int width, int height, const std::string &title)
+    : gallows_{}
 {
     // This MUST be done before anything else, not least loading textures
     InitWindow(width, height, std::string{title}.c_str());
 
-    loadedImages_.load("../assets");
+    gallows_ = std::make_unique<GraphicGallows>();
 
     SetTargetFPS(60);
 }
@@ -25,19 +26,13 @@ void Game::run()
 
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
-            idx = (idx + 1) % 12;
+            if (gallows_->stage() == 11)
+                gallows_->reset();
+            else
+                gallows_->next();
         }
 
-        if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
-        {
-            idx = (12 + idx - 1) % 12;
-        }
-
-        const auto name = std::format("gal{}", idx);
-
-        DrawTextureEx(loadedImages_.at(name), {0, 0}, 0, 2, WHITE);
-        DrawText(name.c_str(), 10, 10, 24, DARKBLUE);
-
+        gallows_->draw();
         EndDrawing();
     }
 }

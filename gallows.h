@@ -3,10 +3,8 @@
 
 #include <array>
 #include <iostream>
-#include <print>
 #include <sstream>
 #include <string>
-#include <vector>
 
 #include "ansi.h"
 
@@ -23,21 +21,21 @@ class Gallows
     virtual std::size_t stages() const = 0;
     virtual void next() = 0;
 
-    virtual void show() const = 0;
+    virtual void draw() const = 0;
     virtual void draw_state() const = 0;
 };
 
-class GallowsEntry
+class TextGallowsEntry
 {
   public:
-    GallowsEntry(unsigned int l, unsigned int c, std::string_view text)
+    TextGallowsEntry(unsigned int l, unsigned int c, std::string_view text)
         : line_(l)
         , column_(c)
         , text_(text)
     {
     }
 
-    void show() const
+    void draw() const
     {
         std::istringstream lines{text_};
         unsigned int cur_line = line_;
@@ -83,21 +81,21 @@ class TextGallows : public Gallows
         ++index_;
     };
 
-    void show() const override
+    void draw() const override
     {
-        gallows_entries_[index_].show();
+        gallows_entries_[index_].draw();
     }
 
     void draw_state() const override
     {
         for (size_t i = 0; i <= index_; ++i)
         {
-            gallows_entries_[i].show();
+            gallows_entries_[i].draw();
         }
     }
 
   private:
-    static const std::array<GallowsEntry, 11> gallows_entries_;
+    static const std::array<TextGallowsEntry, 11> gallows_entries_;
     std::size_t index_{0};
 };
 

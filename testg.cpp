@@ -22,7 +22,7 @@ int main()
 
     for (std::size_t i = 0; i < gallows.stages(); ++i)
     {
-        gallows.show();
+        gallows.draw();
 
         std::print("{}", ANSI::move_cursor(25, 1));
         std::cin.get();

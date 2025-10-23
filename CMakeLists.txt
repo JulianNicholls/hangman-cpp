@@ -23,7 +23,7 @@ FetchContent_MakeAvailable(raylib)
 
 add_executable(text_hangman text_hangman.cpp wordlist.cpp word.cpp text_gallows.cpp)
 add_executable(testg testg.cpp text_gallows.cpp)
-add_executable(raylib_hangman raylib_hangman.cpp raylib_game.cpp wordlist.cpp word.cpp images.cpp)
+add_executable(raylib_hangman raylib_hangman.cpp raylib_game.cpp wordlist.cpp word.cpp graphic_gallows.cpp images.cpp)
 
 target_link_libraries(raylib_hangman raylib)
 
