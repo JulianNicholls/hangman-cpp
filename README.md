@@ -44,14 +44,22 @@ cmake ..
 cmake --build .
 ```
 
-then you can run `text_hangman`
+then you can run `text_hangman` and `raylib_hangman` (although that's not done yet)
 
 et voila.
 
-## latest state
+## Caveat
 
-- The hanged entity is now a robot.
-- The text has colours now, including the robot.
+Although I've only built and run this on my Mac, it should build and run on Windows and Linux, I think.
+
+## Latest State
+
+- The hanged entity in the text version is now a robot.
+- The text version has colours now, including the robot.
 - New word list.
 
-- Preparation for a graphical version using Raylib
+- Beginning of a graphical version using [Raylib](https://raylib.com).
+
+- Imported the images for the gallows and the hanging zombie
+- Made a start on the letter grid to allow for entering guesses
+
