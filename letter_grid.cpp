@@ -4,5 +4,13 @@
 
 void LetterGrid::draw(const Word &word) const
 {
-    DrawRectangle(left_, top_, spacing_, spacing_, WHITE);
+    char ltr[] = "A";
+
+    for (int i = 0; i < 26; ++i)
+    {
+        ltr[0] = 'A' + i;
+        const int line = i / 13;
+        const int col = i % 13;
+        DrawText(ltr, left_ + col * spacing_, top_ + line * spacing_, font_size_, WHITE);
+    }
 }

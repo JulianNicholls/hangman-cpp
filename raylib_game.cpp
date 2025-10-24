@@ -14,7 +14,7 @@ Game::Game(int width, int height, const std::string_view title)
     SetTargetFPS(60);
 
     gallows_ = std::make_unique<GraphicGallows>();
-    letter_grid_ = std::make_unique<LetterGrid>(20, 620, 16, 20);
+    letter_grid_ = std::make_unique<LetterGrid>(20, 620, 32, 40);
 }
 
 void Game::run()
