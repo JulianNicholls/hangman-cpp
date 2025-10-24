@@ -1,5 +1,5 @@
-#ifndef GRAPHIC_GALLOWS
-#define GRAPHIC_GALLOWS
+#ifndef GRAPHIC_GALLOWS_H
+#define GRAPHIC_GALLOWS_H
 
 #include "gallows.h"
 #include "images.h"
@@ -45,4 +45,4 @@ class GraphicGallows : public Gallows
     std::size_t index_{0};
 };
 
-#endif // GRAPHIC_GALLOWS
+#endif // GRAPHIC_GALLOWS_H
