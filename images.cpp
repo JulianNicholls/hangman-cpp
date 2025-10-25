@@ -9,7 +9,12 @@ ImageLoader::ImageLoader(std::string_view dir)
 {
     for (auto const &dir_entry : std::filesystem::directory_iterator(dir))
     {
-        std::string imagename{dir_entry.path().stem()};
+        const std::string ext{dir_entry.path().extension()};
+
+        if (ext != ".png" && ext != ".jpg")
+            continue;
+
+        const std::string imagename{dir_entry.path().stem()};
         const char *filename = dir_entry.path().c_str();
 
         images_.emplace(imagename, LoadTexture(filename));
