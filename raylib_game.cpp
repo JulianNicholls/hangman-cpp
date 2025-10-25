@@ -9,13 +9,13 @@ Game::Game(int width, int height, const std::string_view title)
     : words_{"words-2025-5-16.txt"}
     , gallows_{}
 {
-    // This MUST be done before anything else, not least loading textures
+    // This MUST be done before anything else, not least loading texture images
     InitWindow(width, height, std::string{title}.c_str());
     SetTargetFPS(60);
 
     gallows_ = std::make_unique<GraphicGallows>();
-    letter_grid_ = std::make_unique<LetterGrid>(*this, 40, 620, 32, 40);
     font_ = std::make_unique<Font>(LoadFont("../assets/bloodcrow.ttf"));
+    letter_grid_ = std::make_unique<LetterGrid>(*font_, 40, 680, 36, 40);
 }
 
 void Game::run()
@@ -51,7 +51,7 @@ void Game::run()
         gallows_->draw();
         letter_grid_->draw(word);
 
-        DrawTextEx(*font_, word.word.c_str(), {10, 10}, 20, 2, DARKBLUE);
+        DrawTextEx(*font_, std::format("{}", word).c_str(), {40, 620}, 36, 2, SKYBLUE);
 
         EndDrawing();
     }
