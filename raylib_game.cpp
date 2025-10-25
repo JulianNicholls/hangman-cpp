@@ -14,7 +14,8 @@ Game::Game(int width, int height, const std::string_view title)
     SetTargetFPS(60);
 
     gallows_ = std::make_unique<GraphicGallows>();
-    letter_grid_ = std::make_unique<LetterGrid>(20, 620, 32, 40);
+    letter_grid_ = std::make_unique<LetterGrid>(*this, 40, 620, 32, 40);
+    font_ = std::make_unique<Font>(LoadFont("../assets/bloodcrow.ttf"));
 }
 
 void Game::run()
@@ -29,21 +30,29 @@ void Game::run()
 
         ClearBackground(BLACK);
 
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        if (auto ch = letter_grid_->update(); ch != ' ')
         {
-            if (gallows_->stage() == 11)
-            {
-                gallows_->reset();
-            }
-            else
-            {
+            if (!word.guess(ch))
                 gallows_->next();
-            }
         }
 
+        //        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        //        {
+        //            if (gallows_->stage() == 11)
+        //            {
+        //                gallows_->reset();
+        //            }
+        //            else
+        //            {
+        //                gallows_->next();
+        //            }
+        //        }
+
         gallows_->draw();
-        DrawText(word.word.c_str(), 10, 10, 20, DARKBLUE);
         letter_grid_->draw(word);
+
+        DrawTextEx(*font_, word.word.c_str(), {10, 10}, 20, 2, DARKBLUE);
+
         EndDrawing();
     }
 }
