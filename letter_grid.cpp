@@ -35,7 +35,7 @@ void LetterGrid::draw(const Word &word) const
     {
         ltr[0] = 'A' + i;
 
-        if (word.guessed(ltr[0]))
+        if (word.guessed(ltr[0] | 0x20))
             continue;
 
         const int line = i / 13;
@@ -49,11 +49,6 @@ void LetterGrid::draw(const Word &word) const
 
         // I'm not sure why the horizontal spacing needs an increase...
         DrawTextEx(
-            game_.font(),
-            ltr,
-            {left_ + margin_ * 2 + col * fSpacing, top_ + margin_ + line * fSpacing},
-            font_size_,
-            2,
-            WHITE);
+            font_, ltr, {left_ + margin_ * 2 + col * fSpacing, top_ + margin_ + line * fSpacing}, font_size_, 2, WHITE);
     }
 }
