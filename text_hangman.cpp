@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 {
     const std::string::size_type min_length = (argc > 1) ? atoi(argv[1]) : 5;
 
-    Wordlist words("words-2025-5-16.txt");
+    Wordlist words("../assets/words-2025-5-16.txt");
     TextGallows gallows{};
 
     std::cout << "Hangman V1.04\n\n";

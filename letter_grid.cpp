@@ -49,6 +49,11 @@ void LetterGrid::draw(const Word &word) const
 
         // I'm not sure why the horizontal spacing needs an increase...
         DrawTextEx(
-            font_, ltr, {left_ + margin_ * 2 + col * fSpacing, top_ + margin_ + line * fSpacing}, font_size_, 2, WHITE);
+            font_,
+            ltr,
+            {left_ + margin_ * 2 + col * fSpacing + 1, top_ + margin_ + line * fSpacing},
+            font_size_,
+            2,
+            WHITE);
     }
 }

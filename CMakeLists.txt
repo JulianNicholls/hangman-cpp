@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 4.0)
 
 # set the project name and version
-project(hangman LANGUAGES CXX VERSION 2.0alpha)
+project(hangman LANGUAGES CXX VERSION 1.5)
 
 set(CMAKE_CXX_STANDARD 23)
 

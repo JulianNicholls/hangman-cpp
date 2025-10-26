@@ -6,15 +6,16 @@
 #include "word.h"
 
 Game::Game(int width, int height, const std::string_view title)
-    : words_{"words-2025-5-16.txt"}
+    : words_{"../assets/words-2025-5-16.txt"}
     , gallows_{}
 {
     // This MUST be done before anything else, not least loading texture images
     InitWindow(width, height, std::string{title}.c_str());
     SetTargetFPS(60);
+    SetExitKey(0); // Disable Esc to exit
 
     gallows_ = std::make_unique<GraphicGallows>();
-    font_ = std::make_unique<Font>(LoadFont("../assets/bloodcrow.ttf"));
+    font_ = std::make_unique<Font>(LoadFontEx("../assets/bloodcrow.ttf", 36, nullptr, 0));
     letter_grid_ = std::make_unique<LetterGrid>(*font_, 40, 680, 36, 40);
 }
 

@@ -8,7 +8,7 @@ class GraphicGallows : public Gallows
 {
   public:
     GraphicGallows()
-        : images_("../assets")
+        : images_("../assets/gallows")
         , index_{0}
     {
     }
