@@ -31,7 +31,9 @@ class Game
         FAILURE,
         COMPLETE
     };
+
     void update();
+    void say_click_to_continue() const;
 
     GameState state_;
     Wordlist words_;

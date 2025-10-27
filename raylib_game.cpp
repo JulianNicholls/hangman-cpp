@@ -8,7 +8,7 @@
 Game::Game(int width, int height, const std::string_view title)
     : words_{"../assets/words-2025-5-16.txt"}
     , gallows_{}
-    , state_{GameState::PLAYING}
+    , state_{GameState::STARTING}
     , word_{words_.random()}
 {
     // This MUST be done before anything else raylib-related, not least loading texture images
@@ -24,12 +24,14 @@ Game::Game(int width, int height, const std::string_view title)
 
 void Game::update()
 {
+    const auto left_button_pressed = IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
+
     switch (state_)
     {
         using enum GameState;
 
         case STARTING:
-            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+            if (left_button_pressed)
                 state_ = PLAYING;
             break;
 
@@ -48,7 +50,7 @@ void Game::update()
 
         case SUCCESS:
         case FAILURE:
-            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+            if (left_button_pressed)
                 state_ = COMPLETE;
             break;
 
@@ -75,17 +77,27 @@ void Game::run()
         {
             using enum GameState;
 
-            case STARTING: DrawTexture(images_->at("lets-go"), 0, 300, WHITE); break;
+            case STARTING:
+                gallows_->draw();
+                DrawTexture(images_->at("lets-go"), 0, 300, WHITE);
+                say_click_to_continue();
+                break;
 
             case PLAYING:
                 gallows_->draw();
                 letter_grid_->draw(word_);
-                DrawTextEx(*font_, std::format("{}", word_).c_str(), {40, 620}, 36, 2, SKYBLUE);
+                DrawTextEx(*font_, std::format("{}", word_).c_str(), {40, 620}, 36, 3, SKYBLUE);
                 break;
 
-            case SUCCESS: DrawTexture(images_->at("success-600"), 0, 300, WHITE); break;
+            case SUCCESS:
+            case FAILURE:
+                gallows_->reset();
+                gallows_->draw();
+                DrawTextEx(*font_, std::format("THE WORD WAS {}", word_).c_str(), {40, 700}, 36, 0, SKYBLUE);
+                DrawTexture(state_ == SUCCESS ? images_->at("success-600") : images_->at("failure-600"), 0, 300, WHITE);
+                say_click_to_continue();
+                break;
 
-            case FAILURE: DrawTexture(images_->at("failure-600"), 0, 300, WHITE); break;
             case COMPLETE: break;
         }
 
@@ -94,4 +106,9 @@ void Game::run()
     }
 
     CloseWindow();
+}
+
+void Game::say_click_to_continue() const
+{
+    DrawTextEx(*font_, "CLICK TO CONTINUE", {40, 800}, 36, 0, SKYBLUE);
 }
