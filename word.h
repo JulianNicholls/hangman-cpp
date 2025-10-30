@@ -5,6 +5,18 @@
 #include <ranges>
 #include <vector>
 
+namespace
+{
+std::string upper(std::string_view text)
+{
+    std::string output{};
+
+    std::ranges::transform(text, std::back_inserter(output), toupper);
+
+    return output;
+}
+}
+
 struct Word
 {
     Word(const std::string &text = "")
@@ -13,6 +25,11 @@ struct Word
     }
 
     bool guess(char ltr);
+
+    const std::string display() const
+    {
+        return upper(word);
+    }
 
     bool in_word(char c) const
     {
@@ -50,6 +67,7 @@ struct Word
     std::vector<char> bad_letters;
 };
 
+// Formatting the word gives it with dashes for unguessed letters and spaces between letters otherwise
 template <>
 struct std::formatter<Word>
 {

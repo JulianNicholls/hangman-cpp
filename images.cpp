@@ -25,7 +25,7 @@ ImageLoader::~ImageLoader()
 {
     for (auto [key, tex] : images_)
     {
-        UnloadTexture(tex);
+        ::UnloadTexture(tex);
     }
 }
 

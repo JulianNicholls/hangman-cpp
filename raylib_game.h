@@ -17,7 +17,7 @@ class Game
     ~Game() = default;
 
     void run();
-    const Font &font() const
+    const ::Font &font() const
     {
         return *font_;
     }
@@ -34,6 +34,7 @@ class Game
 
     void update();
     void say_click_to_continue() const;
+    void show_guessed() const;
 
     GameState state_;
     Wordlist words_;

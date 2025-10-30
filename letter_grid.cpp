@@ -1,11 +1,10 @@
 #include "raylib.h"
 
 #include "letter_grid.h"
-#include "raylib_game.h"
 
 char LetterGrid::update()
 {
-    auto [x, y] = GetMousePosition();
+    auto [x, y] = ::GetMousePosition();
 
     if (x < left_ || x > left_ + 13 * spacing_ || y < top_ || y > top_ + 2 * spacing_)
     {
@@ -18,7 +17,7 @@ char LetterGrid::update()
 
     highlighted_ = line * 13 + col;
 
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    if (::IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     {
         return 'a' + highlighted_;
     }
@@ -43,12 +42,12 @@ void LetterGrid::draw(const Word &word) const
 
         if (i == highlighted_)
         {
-            DrawRectangleRounded(
+            ::DrawRectangleRounded(
                 {left_ + col * fSpacing, top_ + line * fSpacing, fSpacing, fSpacing}, 0.3f, 6, SKYBLUE);
         }
 
         // I'm not sure why the horizontal spacing needs an increase.
-        DrawTextEx(
+        ::DrawTextEx(
             font_, ltr, {left_ + margin_ * 2 + col * fSpacing, top_ + margin_ + line * fSpacing}, font_size_, 0, WHITE);
     }
 }

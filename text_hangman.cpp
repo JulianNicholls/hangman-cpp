@@ -16,19 +16,6 @@
 
 using namespace std::chrono_literals;
 
-namespace
-{
-
-std::string upper(std::string_view text)
-{
-    std::string output{};
-
-    std::ranges::transform(text, std::back_inserter(output), toupper);
-
-    return output;
-}
-}
-
 std::string bad_guesses(const std::vector<char> &list)
 {
     std::string out{ANSI::reset + "Guesses: " + ANSI::light_red};
@@ -128,13 +115,13 @@ int main(int argc, char *argv[])
         {
             gallows.draw_state();
             std::cout << ANSI::move_cursor(26, 1)
-                      << std::format("{}\nYou got it: {}{}\n", ANSI::light_green, upper(choice.word), ANSI::reset);
+                      << std::format("{}\nYou got it: {}{}\n", ANSI::light_green, choice.display(), ANSI::reset);
         }
         else if (hanged())
         {
             gallows.draw_state();
             std::cout << ANSI::move_cursor(26, 1)
-                      << std::format("{}\nBad luck! It was {}{}\n", ANSI::light_red, upper(choice.word), ANSI::reset);
+                      << std::format("{}\nBad luck! It was {}{}\n", ANSI::light_red, choice.display(), ANSI::reset);
         }
 
         std::cout << ANSI::light_blue + "\nplay again? " + ANSI::reset;
