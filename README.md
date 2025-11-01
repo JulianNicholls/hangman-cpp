@@ -44,7 +44,7 @@ cmake ..
 cmake --build .
 ```
 
-then you can run `text_hangman` and `raylib_hangman` (although that's not done yet)
+then you can run `text_hangman` and `raylib_hangman`.
 
 et voila.
 
@@ -62,4 +62,8 @@ Although I've only built and run this on my Mac, it should build and run on Wind
 
 - Imported the images for the gallows and the hanging zombie
 - Made a start on the letter grid to allow for entering guesses
+
+- Letter grid is working
+- Wrong guesses are shown
+- Opening and completion screens
 
