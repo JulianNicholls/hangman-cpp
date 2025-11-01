@@ -5,6 +5,16 @@
 #include "raylib_game.h"
 #include "word.h"
 
+namespace
+{
+void centre(const ::Font &font, const std::string &text, float y, float size, float spacing, ::Color colour)
+{
+    auto textsize = ::MeasureTextEx(font, text.c_str(), size, spacing);
+
+    ::DrawTextEx(font, text.c_str(), {300 - textsize.x / 2, y}, size, spacing, colour);
+}
+}
+
 Game::Game(int width, int height, const std::string_view title)
     : words_{"../assets/words-2025-5-16.txt"}
     , gallows_{}
@@ -92,16 +102,20 @@ void Game::run()
 
             case SUCCESS:
             case FAILURE:
-                ::DrawTextEx(
+            {
+                auto info_text = std::format("The word was   {}", word_.display());
+
+                centre(
                     *font_,
-                    std::format("THE WORD WAS   {}", word_.display()).c_str(),
-                    {40, 700},
+                    info_text,
+                    700,
                     36,
-                    0,
+                    3,
                     state_ == SUCCESS ? ::Color{120, 255, 120, 255} : ::Color{255, 50, 50, 255});
                 ::DrawTexture(state_ == SUCCESS ? images_->at("success-600") : images_->at("failure-600"), 0, 0, WHITE);
                 say_click_to_continue();
-                break;
+            }
+            break;
 
             case COMPLETE: break;
         }
@@ -115,7 +129,7 @@ void Game::run()
 
 void Game::say_click_to_continue() const
 {
-    ::DrawTextEx(*font_, "CLICK TO CONTINUE", {140, 800}, 36, 0, SKYBLUE);
+    centre(*font_, "Click to Continue", 800, 36, 0, SKYBLUE);
 }
 
 void Game::show_guessed() const
@@ -124,7 +138,7 @@ void Game::show_guessed() const
 
     if (bad.size() > 0)
     {
-        ::DrawTextEx(*font_, "Guesses:", {40, 700}, 36, 0, SKYBLUE);
+        ::DrawTextEx(*font_, "Guesses:", {40, 700}, 36, 3, SKYBLUE);
 
         std::string out{};
 
@@ -133,6 +147,6 @@ void Game::show_guessed() const
             out += std::format("{} ", static_cast<char>(toupper(ch)));
         }
 
-        ::DrawTextEx(*font_, out.c_str(), {200, 700}, 36, 0, {255, 50, 50, 255});
+        ::DrawTextEx(*font_, out.c_str(), {200, 700}, 36, 3, {255, 50, 50, 255});
     }
 }
