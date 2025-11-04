@@ -13,14 +13,10 @@
 class Game
 {
   public:
-    Game(int width, int height, const std::string_view title);
+    Game(int width, int height, const std::string_view title, size_t min_length);
     ~Game() = default;
 
     void run();
-    const ::Font &font() const
-    {
-        return *font_;
-    }
 
   private:
     enum struct GameState

@@ -15,11 +15,11 @@ void centre(const ::Font &font, const std::string &text, float y, float size, fl
 }
 }
 
-Game::Game(int width, int height, const std::string_view title)
+Game::Game(int width, int height, const std::string_view title, std::size_t min_length)
     : words_{"../assets/words-2025-5-16.txt"}
     , gallows_{}
     , state_{GameState::STARTING}
-    , word_{words_.random()}
+    , word_{words_.random(min_length)}
 {
     // This MUST be done before anything else raylib-related, not least loading texture images
     ::InitWindow(width, height, std::string{title}.c_str());
@@ -46,7 +46,7 @@ void Game::update()
             break;
 
         case PLAYING:
-            if (auto ch = letter_grid_->update(); ch != ' ')
+            if (auto ch = letter_grid_->update(word_); ch != ' ')
             {
                 if (!word_.guess(ch))
                     gallows_->next();
@@ -103,7 +103,7 @@ void Game::run()
             case SUCCESS:
             case FAILURE:
             {
-                auto info_text = std::format("The word was   {}", word_.display());
+                auto info_text = std::format("The word was  {}", word_.display());
 
                 centre(
                     *font_,

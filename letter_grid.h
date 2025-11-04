@@ -17,7 +17,7 @@ class LetterGrid
         , margin_{(spacing - font_size) / 2}
         , highlighted_(-1) {};
 
-    char update();
+    char update(const Word &word);
     void draw(const Word &word) const;
 
   private:

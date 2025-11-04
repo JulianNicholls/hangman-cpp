@@ -2,7 +2,7 @@
 
 #include "letter_grid.h"
 
-char LetterGrid::update()
+char LetterGrid::update(const Word &word)
 {
     auto [x, y] = ::GetMousePosition();
 
@@ -16,10 +16,11 @@ char LetterGrid::update()
     const int col = (x - left_) / spacing_; // 0..12
 
     highlighted_ = line * 13 + col;
+    const auto letter = 'a' + highlighted_;
 
-    if (::IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    if (::IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !word.guessed(letter))
     {
-        return 'a' + highlighted_;
+        return letter;
     }
 
     return ' ';
