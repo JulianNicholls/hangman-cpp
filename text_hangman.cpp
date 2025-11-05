@@ -10,7 +10,7 @@
 #include <unistd.h>
 
 #include "ansi.h"
-#include "gallows.h"
+#include "text_gallows.h"
 #include "word.h"
 #include "wordlist.h"
 

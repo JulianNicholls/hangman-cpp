@@ -50,7 +50,7 @@ et voila.
 
 ## Caveat
 
-Although I've only built and run this on my Mac, it should build and run on Windows and Linux, I think.
+Although I've only built and run this on my Mac, both versions should build and run on Windows and Linux, I think.
 
 ## Latest State
 
@@ -58,15 +58,14 @@ Although I've only built and run this on my Mac, it should build and run on Wind
 - The text version has colours now, including the robot.
 - New word list.
 
-- Beginning of a graphical version using [Raylib](https://raylib.com).
+- Graphical version using [Raylib](https://raylib.com).
 
 - Imported the images for the gallows and the hanging zombie
-- Made a start on the letter grid to allow for entering guesses
+- Letter grid to allow for entering guesses
 
-- Letter grid is working
 - Wrong guesses are shown
 - Opening and completion screens
 
-- Initialisation of the Game no longer needs to be done in two phases becuse an RAII Window class has been introduced.
+- Initialisation of the Raylib version no longer needs to be done in two phases because an RAII Window class has been introduced.
 - Centring now takes note of the window width.
 

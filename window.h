@@ -5,6 +5,9 @@
 
 #include "raylib.h"
 
+// An RAII Window class that merely initialises and shuts down Raylib.
+// It's needed because many things in Raylib require the window to be initialised first.
+
 struct Window
 {
     Window(int _width, int _height, std::string_view title)
@@ -13,6 +16,10 @@ struct Window
     {
         ::InitWindow(width, height, std::string(title).c_str());
     }
+
+    Window(const Window &other) = delete;
+    Window(const Window &&other) = delete;
+    Window &operator=(const Window &other) = delete;
 
     ~Window()
     {

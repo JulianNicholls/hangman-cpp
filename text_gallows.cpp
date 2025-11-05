@@ -1,7 +1,7 @@
 #include <array>
 
 #include "ansi.h"
-#include "gallows.h"
+#include "text_gallows.h"
 
 const char *leg = " |  |\n |  |\n |  |\n |  |\n/  /\n---";
 const std::string brown = ANSI::colour256(94);

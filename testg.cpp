@@ -1,9 +1,8 @@
 #include <iostream>
 #include <print>
-#include <string>
 
 #include "ansi.h"
-#include "gallows.h"
+#include "text_gallows.h"
 
 int main()
 {
