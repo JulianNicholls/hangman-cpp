@@ -67,3 +67,6 @@ Although I've only built and run this on my Mac, it should build and run on Wind
 - Wrong guesses are shown
 - Opening and completion screens
 
+- Initialisation of the Game no longer needs to be done in two phases becuse an RAII Window class has been introduced.
+- Centring now takes note of the window width.
+
