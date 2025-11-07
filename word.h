@@ -9,11 +9,7 @@ namespace
 {
 std::string upper(std::string_view text)
 {
-    std::string output{};
-
-    std::ranges::transform(text, std::back_inserter(output), toupper);
-
-    return output;
+    return std::views::transform(text, toupper) | std::ranges::to<std::string>();
 }
 }
 

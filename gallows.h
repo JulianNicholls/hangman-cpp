@@ -1,7 +1,7 @@
 #ifndef GALLOWS_H
 #define GALLOWS_H
 
-#include <stddef.h>
+#include <cstddef>
 
 class Gallows
 {
