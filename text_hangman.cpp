@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <chrono>
 #include <format>
-#include <iostream>
+#include <print>
 #include <ranges>
 #include <string>
 #include <thread>
@@ -10,6 +10,7 @@
 #include <unistd.h>
 
 #include "ansi.h"
+#include "config.h"
 #include "text_gallows.h"
 #include "word.h"
 #include "wordlist.h"
@@ -30,12 +31,12 @@ std::string bad_guesses(const std::vector<char> &list)
 
 void clear_screen()
 {
-    std::cout << ANSI::clear;
+    std::print(ANSI::clear);
 }
 
 void cursor_home()
 {
-    std::cout << ANSI::home;
+    std::print(ANSI::home);
 }
 
 // Get a character from the keyboard without requiring enter afterward.
@@ -67,15 +68,15 @@ char getchar_immediate()
 
 int main(int argc, char *argv[])
 {
-    const std::string::size_type min_length = (argc > 1) ? atoi(argv[1]) : 5;
+    Config config{"hangman.cfg"};
+    const size_t min_length = stoi(config.at("min_word_length"));
 
     Wordlist words("../assets/words-2025-5-16.txt");
     TextGallows gallows{};
 
-    std::cout << "Hangman V1.04\n\n";
-    std::cout << std::format("Words: {}\n", words.size());
-
-    std::cout << std::format("\nMinimum length: {}\n", min_length);
+    std::println("Hangman V1.05\n");
+    std::println("Words: {}", words.size());
+    std::println("\nMinimum length: {}", min_length);
 
     std::this_thread::sleep_for(1.5s);
 
@@ -98,8 +99,8 @@ int main(int argc, char *argv[])
         do
         {
             gallows.draw();
-            std::cout << ANSI::move_cursor(26, 1)
-                      << std::format("{}\n{}{}\n\n=> ", bad_guesses(choice.bad_letters), ANSI::reset, choice);
+            std::print(
+                "{}{}\n{}{}\n\n=> ", ANSI::move_cursor(26, 1), bad_guesses(choice.bad_letters), ANSI::reset, choice);
 
             ch = getchar_immediate();
 
@@ -114,22 +115,26 @@ int main(int argc, char *argv[])
         if (choice.done())
         {
             gallows.draw_state();
-            std::cout << ANSI::move_cursor(26, 1)
-                      << std::format("{}\nYou got it: {}{}\n", ANSI::light_green, choice.display(), ANSI::reset);
+            std::println(
+                "{}{}\nYou got it: {}{}", ANSI::move_cursor(26, 1), ANSI::light_green, choice.display(), ANSI::reset);
         }
         else if (hanged())
         {
             gallows.draw_state();
-            std::cout << ANSI::move_cursor(26, 1)
-                      << std::format("{}\nBad luck! It was {}{}\n", ANSI::light_red, choice.display(), ANSI::reset);
+            std::println(
+                "{}{}\nBad luck! It was {}{}",
+                ANSI::move_cursor(26, 1),
+                ANSI::light_red,
+                choice.display(),
+                ANSI::reset);
         }
 
-        std::cout << ANSI::light_blue + "\nplay again? " + ANSI::reset;
+        std::print("\n{}play again? {}", ANSI::light_blue, ANSI::reset);
         ch = getchar_immediate();
 
         if (static_cast<char>(tolower(ch)) == 'n')
             still_playing = false;
     }
 
-    std::cout << std::endl;
+    std::println();
 }

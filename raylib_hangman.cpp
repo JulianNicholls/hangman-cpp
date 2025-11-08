@@ -1,10 +1,13 @@
 #include "raylib.h"
 
+#include "config.h"
 #include "raylib_game.h"
 
-int main(int argc, char **argv)
+int main()
 {
-    const size_t min_length = (argc > 1) ? atoi(argv[1]) : 5;
+    Config config("hangman.cfg");
+    const size_t min_length = stoi(config.at("min_word_length"));
+
     ::SetTraceLogLevel(LOG_WARNING);
 
     Window window{600, 900, "Hangman"};
