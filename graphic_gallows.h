@@ -1,6 +1,8 @@
 #ifndef GRAPHIC_GALLOWS_H
 #define GRAPHIC_GALLOWS_H
 
+#include <format>
+
 #include "gallows.h"
 #include "images.h"
 
@@ -13,27 +15,18 @@ class GraphicGallows : public Gallows
     {
     }
 
-    void reset() override
-    {
-        index_ = 0;
-    }
-
-    std::size_t stage() const override
-    {
-        return index_;
-    };
-
     std::size_t stages() const override
     {
         return images_.size();
     };
 
-    void next() override
+    void draw() const override
     {
-        ++index_;
-    };
+        const auto name = std::format("gal{}", index_);
 
-    void draw() const override;
+        ::DrawText(name.c_str(), 10, 10, 24, DARKBLUE);
+        ::DrawTextureEx(images_.at(name), {0, 0}, 0, 2, WHITE);
+    }
 
     void draw_state() const override
     {

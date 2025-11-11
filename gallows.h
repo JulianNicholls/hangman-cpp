@@ -9,15 +9,30 @@ class Gallows
     Gallows() = default;
     virtual ~Gallows() = default;
     Gallows(const Gallows &other) = delete;
+    Gallows(const Gallows &&other) = delete;
 
-    virtual void reset() = 0;
+    virtual void reset()
+    {
+        index_ = 0;
+    }
 
-    virtual size_t stage() const = 0;
+    virtual size_t stage() const
+    {
+        return index_;
+    }
+
+    virtual void next()
+    {
+        ++index_;
+    }
+
     virtual size_t stages() const = 0;
-    virtual void next() = 0;
 
     virtual void draw() const = 0;
     virtual void draw_state() const = 0;
+
+  protected:
+    size_t index_;
 };
 
 #endif // GALLOWS_H

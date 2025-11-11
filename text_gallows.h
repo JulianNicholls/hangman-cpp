@@ -2,7 +2,7 @@
 #define TEXT_GALLOWS_H
 
 #include <array>
-#include <iostream>
+#include <print>
 #include <sstream>
 #include <string>
 
@@ -27,7 +27,7 @@ class TextGallowsEntry
 
         while (std::getline(lines, str))
         {
-            std::cout << ANSI::move_cursor(cur_line++, column_) << str;
+            std::print("{}{}", ANSI::move_cursor(cur_line++, column_), str);
         }
     }
 
@@ -45,24 +45,9 @@ class TextGallows : public Gallows
     {
     }
 
-    void reset() override
-    {
-        index_ = 0;
-    }
-
-    std::size_t stage() const override
-    {
-        return index_;
-    };
-
     std::size_t stages() const override
     {
         return gallows_entries_.size();
-    };
-
-    void next() override
-    {
-        ++index_;
     };
 
     void draw() const override

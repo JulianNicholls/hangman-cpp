@@ -28,6 +28,6 @@ const std::array<TextGallowsEntry, 11> TextGallows::gallows_entries_ = {
     TextGallowsEntry{8, 11, yellow + "    ___\n   /  _\n  /  /\n /  /\n-----\n|___|\n|_|_|"},
     TextGallowsEntry{8, 31, yellow + "___\n_  \\\n \\  \\\n  \\  \\\n  -----\n  |___|\n  |_|_|"},
     TextGallowsEntry{16, 18, yellow + leg},
-    TextGallowsEntry{16, 25, yellow + leg},
+    TextGallowsEntry{16, 25, yellow + leg}
 
 };

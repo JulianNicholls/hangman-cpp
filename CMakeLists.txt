@@ -29,7 +29,6 @@ add_executable(raylib_hangman
     raylib_game.cpp 
     wordlist.cpp 
     word.cpp 
-    graphic_gallows.cpp 
     letter_grid.cpp 
     images.cpp
 )
