@@ -5,6 +5,8 @@
 #include "raylib_game.h"
 #include "word.h"
 
+// Game::updates_ = {{GameState::STARTING, &Game::updateStarting}};
+
 namespace
 {
 void centre(
@@ -18,11 +20,11 @@ void centre(
 {
     auto textsize = ::MeasureTextEx(font, text.c_str(), size, spacing);
 
-    ::DrawTextEx(font, text.c_str(), {window.width / 2 - textsize.x / 2, y}, size, spacing, colour);
+    ::DrawTextEx(font, text.c_str(), {window.width / 2.0f - textsize.x / 2.0f, y}, size, spacing, colour);
 }
 }
 
-Game::Game(const Window &window, std::size_t min_length)
+Game::Game(const Window &window, size_t min_length)
     : window_{window}
     , words_{"../assets/words-2025-5-16.txt"}
     , state_{GameState::STARTING}
@@ -44,31 +46,44 @@ void Game::update()
     {
         using enum GameState;
 
-        case STARTING:
-            if (left_button_pressed)
-                state_ = PLAYING;
-            break;
+        case STARTING: updateStarting(); break;
 
-        case PLAYING:
-            if (auto ch = letter_grid_.update(word_); ch != ' ')
-            {
-                if (!word_.guess(ch))
-                    gallows_.next();
-            }
-
-            if (word_.done())
-                state_ = SUCCESS;
-            else if (word_.bad_letters.size() == gallows_.stages() - 1)
-                state_ = FAILURE;
-            break;
+        case PLAYING: updatePlaying(); break;
 
         case SUCCESS:
-        case FAILURE:
-            if (left_button_pressed)
-                state_ = COMPLETE;
-            break;
+        case FAILURE: updateEnding(); break;
 
         case COMPLETE: break;
+    }
+}
+
+void Game::updateStarting()
+{
+    if (::IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    {
+        state_ = GameState::PLAYING;
+    }
+}
+
+void Game::updatePlaying()
+{
+    if (auto ch = letter_grid_.update(word_); ch != ' ')
+    {
+        if (!word_.guess(ch))
+            gallows_.next();
+    }
+
+    if (word_.done())
+        state_ = GameState::SUCCESS;
+    else if (word_.bad_letters.size() == gallows_.stages() - 1)
+        state_ = GameState::FAILURE;
+}
+
+void Game::updateEnding()
+{
+    if (::IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    {
+        state_ = GameState::COMPLETE;
     }
 }
 

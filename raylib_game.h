@@ -28,6 +28,10 @@ class Game
     };
 
     void update();
+    void updateStarting();
+    void updatePlaying();
+    void updateEnding();
+
     void say_click_to_continue() const;
     void show_guessed() const;
 
@@ -39,6 +43,8 @@ class Game
     LetterGrid letter_grid_;
     Font font_;
     ImageLoader images_;
+
+    // static std::unordered_map<GameState, void (Game::*)()> updates_;
 };
 
 #endif // RAYLIB_GAME_H
