@@ -27,10 +27,13 @@ class Game
     void run();
 
   private:
-    void update();
     void updateStarting();
     void updatePlaying();
     void updateEnding();
+
+    void drawStarting() const;
+    void drawPlaying() const;
+    void drawEnding() const;
 
     void say_click_to_continue() const;
     void show_guessed() const;

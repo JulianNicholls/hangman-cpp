@@ -42,14 +42,6 @@ Game::Game(const Window &window, size_t min_length)
     ::SetExitKey(0); // Disable Esc to exit
 }
 
-void Game::update()
-{
-    if (state_ != GameState::COMPLETE)
-    {
-        (this->*(updates_.at(state_)))();
-    }
-}
-
 void Game::updateStarting()
 {
     if (::IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -80,6 +72,37 @@ void Game::updateEnding()
     }
 }
 
+void Game::drawStarting() const
+{
+    gallows_.draw();
+    ::DrawTexture(images_.at("lets-go-600"), 0, 0, WHITE);
+    say_click_to_continue();
+}
+
+void Game::drawPlaying() const
+{
+    gallows_.draw();
+    show_guessed();
+    letter_grid_.draw(word_);
+    ::DrawTextEx(font_, std::format("{}", word_).c_str(), {40, 620}, 36, 0, SKYBLUE);
+}
+
+void Game::drawEnding() const
+{
+    auto info_text = std::format("The word was  {}", word_.display());
+
+    centre(
+        window_,
+        font_,
+        info_text,
+        700,
+        36,
+        3,
+        state_ == GameState::SUCCESS ? ::Color{120, 255, 120, 255} : ::Color{255, 50, 50, 255});
+    ::DrawTexture(state_ == GameState::SUCCESS ? images_.at("success-600") : images_.at("failure-600"), 0, 0, WHITE);
+    say_click_to_continue();
+}
+
 void Game::run()
 {
     int idx = 0;
@@ -88,10 +111,11 @@ void Game::run()
 
     while (!::WindowShouldClose() && state_ != GameState::COMPLETE)
     {
-        update();
-
         if (state_ != GameState::COMPLETE)
+        {
+            (this->*(updates_.at(state_)))();
             ::BeginDrawing();
+        }
 
         ::ClearBackground(BLACK);
 
@@ -99,36 +123,12 @@ void Game::run()
         {
             using enum GameState;
 
-            case STARTING:
-                gallows_.draw();
-                ::DrawTexture(images_.at("lets-go-600"), 0, 0, WHITE);
-                say_click_to_continue();
-                break;
+            case STARTING: drawStarting(); break;
 
-            case PLAYING:
-                gallows_.draw();
-                show_guessed();
-                letter_grid_.draw(word_);
-                ::DrawTextEx(font_, std::format("{}", word_).c_str(), {40, 620}, 36, 0, SKYBLUE);
-                break;
+            case PLAYING: drawPlaying(); break;
 
             case SUCCESS:
-            case FAILURE:
-            {
-                auto info_text = std::format("The word was  {}", word_.display());
-
-                centre(
-                    window_,
-                    font_,
-                    info_text,
-                    700,
-                    36,
-                    3,
-                    state_ == SUCCESS ? ::Color{120, 255, 120, 255} : ::Color{255, 50, 50, 255});
-                ::DrawTexture(state_ == SUCCESS ? images_.at("success-600") : images_.at("failure-600"), 0, 0, WHITE);
-                say_click_to_continue();
-            }
-            break;
+            case FAILURE: drawEnding(); break;
 
             case COMPLETE: break;
         }
