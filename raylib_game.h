@@ -9,6 +9,15 @@
 #include "window.h"
 #include "wordlist.h"
 
+enum struct GameState
+{
+    STARTING,
+    PLAYING,
+    SUCCESS,
+    FAILURE,
+    COMPLETE
+};
+
 class Game
 {
   public:
@@ -18,15 +27,6 @@ class Game
     void run();
 
   private:
-    enum struct GameState
-    {
-        STARTING,
-        PLAYING,
-        SUCCESS,
-        FAILURE,
-        COMPLETE
-    };
-
     void update();
     void updateStarting();
     void updatePlaying();
@@ -44,7 +44,7 @@ class Game
     Font font_;
     ImageLoader images_;
 
-    // static std::unordered_map<GameState, void (Game::*)()> updates_;
+    const static std::unordered_map<GameState, void (Game::*)()> updates_;
 };
 
 #endif // RAYLIB_GAME_H

@@ -5,7 +5,11 @@
 #include "raylib_game.h"
 #include "word.h"
 
-// Game::updates_ = {{GameState::STARTING, &Game::updateStarting}};
+const std::unordered_map<GameState, void (Game::*)()> Game::updates_ = {
+    {GameState::STARTING, &Game::updateStarting},
+    {GameState::PLAYING, &Game::updatePlaying},
+    {GameState::SUCCESS, &Game::updateEnding},
+    {GameState::FAILURE, &Game::updateEnding}};
 
 namespace
 {
@@ -40,20 +44,9 @@ Game::Game(const Window &window, size_t min_length)
 
 void Game::update()
 {
-    const auto left_button_pressed = ::IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
-
-    switch (state_)
+    if (state_ != GameState::COMPLETE)
     {
-        using enum GameState;
-
-        case STARTING: updateStarting(); break;
-
-        case PLAYING: updatePlaying(); break;
-
-        case SUCCESS:
-        case FAILURE: updateEnding(); break;
-
-        case COMPLETE: break;
+        (this->*(updates_.at(state_)))();
     }
 }
 
