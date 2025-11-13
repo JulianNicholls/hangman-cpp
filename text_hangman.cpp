@@ -74,11 +74,9 @@ int main(int argc, char *argv[])
     Wordlist words("../assets/words-2025-5-16.txt");
     TextGallows gallows{};
 
-    std::println("Hangman V1.05\n");
-    std::println("Words: {}", words.size());
-    std::println("\nMinimum length: {}", min_length);
+    std::println("Hangman V1.06\n\nWords: {}\n\nMinimum length: {}", words.size(), min_length);
 
-    std::this_thread::sleep_for(1.5s);
+    std::this_thread::sleep_for(2s);
 
     Word choice{};
 
