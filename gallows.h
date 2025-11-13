@@ -7,7 +7,10 @@
 class Gallows
 {
   public:
-    Gallows() = default;
+    Gallows()
+        : index_{0}
+    {
+    }
     virtual ~Gallows() = default;
     Gallows(const Gallows &other) = delete;
     Gallows(const Gallows &&other) = delete;
@@ -24,7 +27,6 @@ class Gallows
 
     virtual void next()
     {
-        std::println("Updating index: {} {}", index_, index_ + 1);
         ++index_;
     }
 

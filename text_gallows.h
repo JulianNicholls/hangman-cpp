@@ -40,10 +40,7 @@ class TextGallowsEntry
 class TextGallows : public Gallows
 {
   public:
-    TextGallows()
-        : index_{0}
-    {
-    }
+    TextGallows() = default;
 
     std::size_t stages() const override
     {
@@ -65,7 +62,6 @@ class TextGallows : public Gallows
 
   private:
     static const std::array<TextGallowsEntry, 11> gallows_entries_;
-    std::size_t index_{0};
 };
 
 #endif // TEXT_GALLOWS_H

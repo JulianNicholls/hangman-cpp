@@ -12,7 +12,6 @@ class GraphicGallows : public Gallows
   public:
     GraphicGallows()
         : images_("../assets/gallows")
-        , index_{0}
     {
     }
 
@@ -36,7 +35,6 @@ class GraphicGallows : public Gallows
 
   private:
     ImageLoader images_;
-    std::size_t index_{0};
 };
 
 #endif // GRAPHIC_GALLOWS_H
