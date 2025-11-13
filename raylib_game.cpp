@@ -9,7 +9,15 @@ const std::unordered_map<GameState, void (Game::*)()> Game::updates_ = {
     {GameState::STARTING, &Game::updateStarting},
     {GameState::PLAYING, &Game::updatePlaying},
     {GameState::SUCCESS, &Game::updateEnding},
-    {GameState::FAILURE, &Game::updateEnding}};
+    {GameState::FAILURE, &Game::updateEnding},
+    {GameState::COMPLETE, &Game::updateNothing}};
+
+const std::unordered_map<GameState, void (Game::*)() const> Game::draws_ = {
+    {GameState::STARTING, &Game::drawStarting},
+    {GameState::PLAYING, &Game::drawPlaying},
+    {GameState::SUCCESS, &Game::drawEnding},
+    {GameState::FAILURE, &Game::drawEnding},
+    {GameState::COMPLETE, &Game::drawNothing}};
 
 namespace
 {
@@ -35,7 +43,7 @@ Game::Game(const Window &window, size_t min_length)
     , word_{words_.random(min_length)}
     , gallows_{GraphicGallows{}}
     , font_{LoadFontEx("../assets/bloodcrow.ttf", 36, nullptr, 0)}
-    , letter_grid_{LetterGrid{font_, 40, 780, 36, 40}}
+    , letter_grid_{LetterGrid{font_, 40, 780, 36, 40.0f}}
     , images_{ImageLoader{"../assets"}}
 {
     ::SetTargetFPS(60);
@@ -55,13 +63,19 @@ void Game::updatePlaying()
     if (auto ch = letter_grid_.update(word_); ch != ' ')
     {
         if (!word_.guess(ch))
+        {
             gallows_.next();
+        }
     }
 
     if (word_.done())
+    {
         state_ = GameState::SUCCESS;
+    }
     else if (word_.bad_letters.size() == gallows_.stages() - 1)
+    {
         state_ = GameState::FAILURE;
+    }
 }
 
 void Game::updateEnding()
@@ -74,7 +88,6 @@ void Game::updateEnding()
 
 void Game::drawStarting() const
 {
-    gallows_.draw();
     ::DrawTexture(images_.at("lets-go-600"), 0, 0, WHITE);
     say_click_to_continue();
 }
@@ -111,30 +124,15 @@ void Game::run()
 
     while (!::WindowShouldClose() && state_ != GameState::COMPLETE)
     {
-        if (state_ != GameState::COMPLETE)
-        {
-            (this->*(updates_.at(state_)))();
-            ::BeginDrawing();
-        }
+        (this->*(updates_.at(state_)))();
+
+        ::BeginDrawing();
 
         ::ClearBackground(BLACK);
 
-        switch (state_)
-        {
-            using enum GameState;
+        (this->*(draws_.at(state_)))();
 
-            case STARTING: drawStarting(); break;
-
-            case PLAYING: drawPlaying(); break;
-
-            case SUCCESS:
-            case FAILURE: drawEnding(); break;
-
-            case COMPLETE: break;
-        }
-
-        if (state_ != GameState::COMPLETE)
-            ::EndDrawing();
+        ::EndDrawing();
     }
 }
 
@@ -149,7 +147,7 @@ void Game::show_guessed() const
 
     if (bad.size() > 0)
     {
-        ::DrawTextEx(font_, "Guesses:", {40, 700}, 36, 3, SKYBLUE);
+        ::DrawTextEx(font_, "Guesses:", {40, 700}, 36, 0, SKYBLUE);
 
         std::string out{};
 

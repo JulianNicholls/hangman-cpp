@@ -27,10 +27,16 @@ class Game
     void run();
 
   private:
+    void updateNothing()
+    {
+    }
     void updateStarting();
     void updatePlaying();
     void updateEnding();
 
+    void drawNothing() const
+    {
+    }
     void drawStarting() const;
     void drawPlaying() const;
     void drawEnding() const;
@@ -48,6 +54,7 @@ class Game
     ImageLoader images_;
 
     const static std::unordered_map<GameState, void (Game::*)()> updates_;
+    const static std::unordered_map<GameState, void (Game::*)() const> draws_;
 };
 
 #endif // RAYLIB_GAME_H

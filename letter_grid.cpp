@@ -30,25 +30,24 @@ void LetterGrid::draw(const Word &word) const
 {
     char ltr[] = "A";
 
-    for (int i = 0; i < 26; ++i)
+    for (unsigned int i = 0; i < 26; ++i)
     {
         ltr[0] = 'A' + i;
 
-        if (word.guessed(ltr[0] | 0x20)) // Lowercase for comparison
+        if (word.guessed(static_cast<char>(tolower(ltr[0])))) // Lowercase for comparison
             continue;
 
         const int line = i / 13;
         const int col = i % 13;
-        const float fSpacing = spacing_;
 
         if (i == highlighted_)
         {
             ::DrawRectangleRounded(
-                {left_ + col * fSpacing, top_ + line * fSpacing, fSpacing, fSpacing}, 0.3f, 6, SKYBLUE);
+                {left_ + col * spacing_, top_ + line * spacing_, spacing_, spacing_}, 0.3f, 6, SKYBLUE);
         }
 
         // I'm not sure why the horizontal spacing needs an increase.
         ::DrawTextEx(
-            font_, ltr, {left_ + margin_ * 2 + col * fSpacing, top_ + margin_ + line * fSpacing}, font_size_, 0, WHITE);
+            font_, ltr, {left_ + margin_ * 2 + col * spacing_, top_ + margin_ + line * spacing_}, font_size_, 0, WHITE);
     }
 }

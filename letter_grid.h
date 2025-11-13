@@ -8,7 +8,7 @@
 class LetterGrid
 {
   public:
-    LetterGrid(const Font &font, int left, int top, int font_size, int spacing)
+    LetterGrid(const Font &font, int left, int top, int font_size, float spacing)
         : font_{font}
         , left_{left}
         , top_{top}
@@ -26,8 +26,8 @@ class LetterGrid
     int left_;
     int top_;
     int font_size_;
-    int spacing_;
-    int margin_;
+    float spacing_;
+    float margin_;
 
     int highlighted_;
 };

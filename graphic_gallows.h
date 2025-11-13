@@ -2,6 +2,7 @@
 #define GRAPHIC_GALLOWS_H
 
 #include <format>
+#include <print>
 
 #include "gallows.h"
 #include "images.h"
@@ -23,6 +24,7 @@ class GraphicGallows : public Gallows
     void draw() const override
     {
         const auto name = std::format("gal{}", index_);
+        // std::println("{}: {}", index_, name);
 
         ::DrawTextureEx(images_.at(name), {0, 0}, 0, 2, WHITE);
     }

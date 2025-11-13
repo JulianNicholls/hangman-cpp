@@ -2,6 +2,7 @@
 #define GALLOWS_H
 
 #include <cstddef>
+#include <print>
 
 class Gallows
 {
@@ -23,6 +24,7 @@ class Gallows
 
     virtual void next()
     {
+        std::println("Updating index: {} {}", index_, index_ + 1);
         ++index_;
     }
 
