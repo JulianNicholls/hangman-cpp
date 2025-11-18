@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 4.0)
 
 # set the project name and version
-project(hangman LANGUAGES CXX VERSION 1.5)
+project(hangman LANGUAGES CXX VERSION 1.07)
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -21,8 +21,15 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(raylib)
 
-add_executable(text_hangman text_hangman.cpp config.cpp wordlist.cpp word.cpp text_gallows.cpp)
 add_executable(testg testg.cpp text_gallows.cpp)
+add_executable(text_hangman
+    text_hangman.cpp 
+    config.cpp 
+    text_game.cpp 
+    wordlist.cpp 
+    word.cpp 
+    text_gallows.cpp
+)
 add_executable(raylib_hangman 
     raylib_hangman.cpp 
     config.cpp

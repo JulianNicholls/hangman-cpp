@@ -2,7 +2,6 @@
 #define GALLOWS_H
 
 #include <cstddef>
-#include <print>
 
 class Gallows
 {
