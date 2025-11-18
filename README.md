@@ -67,5 +67,7 @@ Although I've only built and run this on my Mac, both versions should build and 
 - Opening and completion screens
 
 - Initialisation of the Raylib version no longer needs to be done in two phases because an RAII Window class has been introduced.
-- Centring now takes note of the window width.
+- Centring now takes note of the window width in the Raylib game.
+
+- The text game has been refactored, with a text game class akin to the raylib one.
 
