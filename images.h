@@ -13,10 +13,13 @@ class ImageLoader
 
     virtual ~ImageLoader();
 
+    ImageLoader(const ImageLoader &other) = delete;
+    ImageLoader(const ImageLoader &&other) = delete;
     ImageLoader operator=(const ImageLoader &other) = delete;
 
     void load(std::string_view dir);
     const Texture2D &at(std::string_view name) const;
+    const Texture2D &operator[](std::string_view name) const;
 
     std::size_t size() const
     {

@@ -37,9 +37,16 @@ Config::Config(const std::string &filename)
     }
 }
 
-const std::string &Config::at(const std::string &key)
+const std::string &Config::at(const std::string &key) const
 {
     // std::println("retrieving {}: '{}'", key, values_[key]);
 
-    return values_[key];
+    return values_.at(key);
+}
+
+const std::string &Config::operator[](const std::string &key) const
+{
+    // std::println("retrieving {} via []: '{}'", key, values_[key]);
+
+    return values_.at(key);
 }

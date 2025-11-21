@@ -25,7 +25,7 @@ class GraphicGallows : public Gallows
         const auto name = std::format("gal{}", index_);
         // std::println("{}: {}", index_, name);
 
-        ::DrawTextureEx(images_.at(name), {0, 0}, 0, 2, WHITE);
+        ::DrawTextureEx(images_[name], {0, 0}, 0, 2, WHITE);
     }
 
     void draw_state() const override
