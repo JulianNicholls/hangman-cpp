@@ -22,6 +22,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(raylib)
 
 add_executable(testg testg.cpp text_gallows.cpp)
+add_executable(testconfig testconfig.cpp config.cpp)
 add_executable(text_hangman
     text_hangman.cpp 
     config.cpp 

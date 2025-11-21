@@ -44,7 +44,8 @@ cmake ..
 cmake --build .
 ```
 
-then you can run `text_hangman` and `raylib_hangman`.
+then you can run `text_hangman` and `raylib_hangman`. There are also a couple of test programs,
+the text gallows tester called `testg` and the config tester called `testconfig`.
 
 et voila.
 
