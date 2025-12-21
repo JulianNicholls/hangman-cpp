@@ -19,7 +19,7 @@ class ImageLoader
 
     void load(std::string_view dir);
     const Texture2D &at(std::string_view name) const;
-    const Texture2D &operator[](std::string_view name) const;
+    const Texture2D &operator[](std::string_view name);
 
     std::size_t size() const
     {

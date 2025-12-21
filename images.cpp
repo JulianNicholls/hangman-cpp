@@ -34,7 +34,7 @@ const Texture2D &ImageLoader::at(std::string_view name) const
     return images_.at(std::string(name));
 }
 
-const Texture2D &ImageLoader::operator[](std::string_view name) const
+const Texture2D &ImageLoader::operator[](std::string_view name)
 {
-    return images_.at(std::string(name));
+    return images_[std::string(name)];
 }

@@ -19,20 +19,23 @@ Config::Config(const std::string &filename)
 
     while (std::getline(ifile, line))
     {
-        // There's at least two ways to do this...
+        // There are at least two ways to do this...
         // This way with std::views::split, and using std::ranges::find_first_of and then using the delimiter offset
+
+        // I still think it's perverse that std::views::split turns 'A1=B2' into [['A', '1'], ['B', '2']]
+        // and not ["A1", "B2"] where [] denotes a range.
 
         auto parts = line | std::views::split('=');
         auto it = parts.begin();
 
         if (it != parts.end())
         {
-            std::string key((*it).begin(), (*it).end());
-            ++it;
-            std::string value((*it).begin(), (*it).end());
+            // std::string_view has a constructor that takes a range since C++23.
+            std::string_view key(*it++);
+            std::string_view value(*it);
 
             // std::println("  Config: Setting {} = {}", key, value);
-            values_[key] = value;
+            values_[std::string(key)] = value;
         }
     }
 }
@@ -46,7 +49,16 @@ const std::string &Config::at(const std::string &key) const
 
 const std::string &Config::operator[](const std::string &key) const
 {
+    static std::string emptyStr = "";
+
     // std::println("retrieving {} via []: '{}'", key, values_[key]);
 
-    return values_.at(key);
+    try
+    {
+        return values_.at(key);
+    }
+    catch (std::out_of_range &e)
+    {
+        return emptyStr;
+    }
 }

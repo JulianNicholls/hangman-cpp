@@ -88,7 +88,7 @@ void Game::updateEnding()
 
 void Game::drawStarting() const
 {
-    ::DrawTexture(images_["lets-go-600"], 0, 0, WHITE);
+    ::DrawTexture(images_.at("lets-go-600"), 0, 0, WHITE);
     say_click_to_continue();
 }
 
@@ -112,7 +112,7 @@ void Game::drawEnding() const
         36,
         3,
         state_ == GameState::SUCCESS ? ::Color{120, 255, 120, 255} : ::Color{255, 50, 50, 255});
-    ::DrawTexture(state_ == GameState::SUCCESS ? images_["success-600"] : images_["failure-600"], 0, 0, WHITE);
+    ::DrawTexture(state_ == GameState::SUCCESS ? images_.at("success-600") : images_.at("failure-600"), 0, 0, WHITE);
     say_click_to_continue();
 }
 

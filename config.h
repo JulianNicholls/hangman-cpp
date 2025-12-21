@@ -12,6 +12,8 @@ class Config
     const std::string &at(const std::string &key) const;
     // I now understand what is going on...
     // sum::at() is const, sum::[] is not.
+
+    // Here, returning an empty string for a missing value is fine.
     const std::string &operator[](const std::string &key) const;
 
   private:
